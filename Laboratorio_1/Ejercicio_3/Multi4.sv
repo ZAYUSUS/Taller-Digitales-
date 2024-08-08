@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+
+module Multi4#(int unsigned WIDTH=4)(
+    input [2:0] select,
+    input [WIDTH:0] a,
+    input [WIDTH:0] b,
+    input [WIDTH:0] c,
+    input [WIDTH:0] d,
+    output reg [WIDTH:0] out
+    );
+    //si hay un cambio en alguna entrada el multiplexor actualizará sus datos.
+    always @(a or b or c or d or select)begin 
+        case (select)
+            3'b000 : out <=a; //se otorga el valor de a  en out si el selector es 0
+            3'b001 : out <=b; //se otorga el valor de b  en out si el selector es 1
+            3'b010 : out <=c;//se otorga el valor de c  en out si el selector es 2
+            3'b011 : out <=d;//se otorga el valor de d  en out si el selector es 3
+        endcase
+    end
+endmodule
