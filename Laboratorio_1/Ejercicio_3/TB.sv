@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: Archivo con el código para probar el multiplexor de 8:1
+// Description: Archivo con el cï¿½digo para probar el multiplexor de 4:1
 // 
 // Dependencies: 
 // 
@@ -19,9 +19,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//se inicializan los registros para variables de entrada y de selección
+//se inicializan los registros para variables de entrada y de selecciï¿½n
 // se declaran las variables de salida
-module Testbench#(int unsigned WIDTH=16);
+module Testbench#(int unsigned WIDTH=16);//WIDTH:tamaÃ±o de los buses
     reg [WIDTH-1:0] a;
     reg [WIDTH-1:0] b;
     reg [WIDTH-1:0] c;
@@ -30,7 +30,7 @@ module Testbench#(int unsigned WIDTH=16);
     reg [1:0] select;
     integer i;
     
-    //Se crea el mux que se utilizará en las prubeas
+    //Se crea el mux que se utilizarï¿½ en las prubeas
     Multi4 mux0( .select(select),
      .a(a),
      .b(b),
@@ -49,6 +49,6 @@ module Testbench#(int unsigned WIDTH=16);
              d <= $random;
             #5 select<= $random;
         end
-    // se termina la simulación luego de hacer un barrido por las entradas del mux
+    // se termina la simulaciï¿½n luego de hacer un barrido por las entradas del mux
         #5 $finish;    end
 endmodule

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Multi4#(int unsigned WIDTH=16)(
+module Multi4#(int unsigned WIDTH=16)(//WIDTH:tamaÃ±o de los buses
     input [1:0] select,
     input [WIDTH-1:0] a,
     input [WIDTH-1:0] b,
@@ -8,7 +8,7 @@ module Multi4#(int unsigned WIDTH=16)(
     input [WIDTH-1:0] d,
     output reg [WIDTH:0] out
     );
-    //si hay un cambio en alguna entrada el multiplexor actualizará sus datos.
+    //si hay un cambio en alguna entrada el multiplexor actualizarï¿½ sus datos.
     always @(a or b or c or d or select)begin 
         case (select)
             2'b00 : out <=a; //se otorga el valor de a  en out si el selector es 0
