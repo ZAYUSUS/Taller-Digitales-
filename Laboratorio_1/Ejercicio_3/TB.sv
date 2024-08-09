@@ -21,17 +21,13 @@
 
 //se inicializan los registros para variables de entrada y de selección
 // se declaran las variables de salida
-module Testbench#(int unsigned WIDTH=4);
-    reg [WIDTH:0] a;
-    reg [WIDTH:0] b;
-    reg [WIDTH:0] c;
-    reg [WIDTH:0] d;
-    reg [WIDTH:0] e;
-    reg [WIDTH:0] f;
-    reg [WIDTH:0] g;
-    reg [WIDTH:0] h;
-    wire [WIDTH:0] out;
-    reg [WIDTH:0] select;
+module Testbench#(int unsigned WIDTH=16);
+    reg [WIDTH-1:0] a;
+    reg [WIDTH-1:0] b;
+    reg [WIDTH-1:0] c;
+    reg [WIDTH-1:0] d;
+    wire [WIDTH-1:0] out;
+    reg [1:0] select;
     integer i;
     
     //Se crea el mux que se utilizará en las prubeas
@@ -45,13 +41,13 @@ module Testbench#(int unsigned WIDTH=4);
     initial begin 
     //Se inicia el selector en 0 y se otorgan valores aleatorios a los registros
         select <= 0;
-        a <= $random;
-        b <= $random;
-        c <= $random;
-        d <= $random;
         //cambia el valor de select luego de 5ns
-        for( i=1;i<4;i=i+1)begin 
-            #5 select<=i;
+        for( i=0;i<50;i=i+1)begin
+             a <= $random;
+             b <= $random;
+             c <= $random;
+             d <= $random;
+            #5 select<= $random;
         end
     // se termina la simulación luego de hacer un barrido por las entradas del mux
         #5 $finish;    end
