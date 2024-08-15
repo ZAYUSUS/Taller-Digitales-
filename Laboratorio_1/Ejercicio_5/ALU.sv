@@ -14,8 +14,14 @@ always_comb begin
       'h0:             ALUResult = ALUA & ALUB;//and
       'h1:             ALUResult = ALUA | ALUB;//or
       'h2:             ALUResult = ALUA + ALUB;//suma
-      'h3:if(ALUFlagIn) ALUResult = ALUB+1;else ALUResult = ALUA+1; //incremento en 1//SI es 0 elije B, si es 1 elije A
-      'h4:if(ALUFlagIn) ALUResult = ALUB-1;else ALUResult = ALUA-1;//decremento en 1
+      'h3:begin 
+          ALUFlags = ALUA[WIDTH-ALUB+1];//Iltimo bit en moverse
+          if(ALUFlagIn) ALUResult = ALUB+1;else ALUResult = ALUA+1;
+          end //incremento en 1//SI es 0 elije B, si es 1 elije A
+      'h4:begin 
+          ALUFlags  = ALUA[ALUB-1];//Ultimo dígito en moverse
+          if(ALUFlagIn) ALUResult = ALUB-1;else ALUResult = ALUA-1;
+          end//decremento en 1
       'h5:if(ALUFlagIn)ALUResult = !ALUB;else ALUResult = !ALUA;//not 
       'h6:             ALUResult = ALUA - ALUB;//resta
       'h7:             ALUResult = ALUA ^ ALUB;//Xor
