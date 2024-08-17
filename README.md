@@ -1,4 +1,4 @@
-### Instituto Tecnológico de Costa Rica
+## Instituto Tecnológico de Costa Rica
 ### EL-3313: Taller de Diseño Digital
 ### Grupo 20
 ### Profesor: Ing. Kaleb Alfaro Badilla
@@ -10,5 +10,5 @@
 
 ### II Semestre 2024
 
-## Descripción general
+### Descripción general
 El objetivo fundamental de este repositorio es guardar todo lo relacionado con el curso Taller de Diseño Digital.
