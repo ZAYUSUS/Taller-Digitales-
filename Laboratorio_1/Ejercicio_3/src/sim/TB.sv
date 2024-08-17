@@ -51,4 +51,9 @@ module Testbench#(int unsigned WIDTH=16);//WIDTH:tamaño de los buses
         end
     // se termina la simulaci�n luego de hacer un barrido por las entradas del mux
         #5 $finish;    end
+    initial begin
+        $dumpfile("Multi4.vcd");
+        $dumpvars(0,Multi4);
+    end
+
 endmodule

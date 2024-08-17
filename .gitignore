@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+oss-cad-suite/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
