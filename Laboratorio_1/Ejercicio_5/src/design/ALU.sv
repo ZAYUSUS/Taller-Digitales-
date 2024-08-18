@@ -4,13 +4,12 @@
 module ALUP#(parameter int unsigned WIDTH=4) (//WIDTH ancho de los buses 
   input  logic [WIDTH-1:0] ALUA,
   input  logic [WIDTH-1:0] ALUB,
-  input  int unsigned ALUControl,
+  input  logic [3:0] ALUControl,
   input logic ALUFlagIn,
   output logic [WIDTH-1:0] ALUResult,
   output logic C,
   output logic Z
 );
-int B=15;
 always_comb begin
     //and 
     //or 
@@ -31,18 +30,17 @@ always_comb begin
       'h6:             ALUResult = (~ALUA+1) - (~ALUB+1);//resta complemento a 2
       'h7:             ALUResult = ALUA ^ ALUB;//Xor
       'h8: if(ALUFlagIn)//corrimiento a la izqueirda de A
-          ALUResult = (ALUA << ALUB) + ((2^ALUB)-1);
-        else ALUResult = ALUA<<ALUB;
+          ALUResult = (ALUA << ALUB) | (~((1 >> (WIDTH - ALUB)) - 1));//corre a la izquierda ALUB bits y los rellena con 1
+        else ALUResult = ALUA<<ALUB;//corre a la izquierda y rellena con 0
       'h9: //corrimiento a la derecha de A
-        if(ALUFlagIn)begin
-          B = ALUB;
-          for(int i=0;i< B;i++) ALUResult = (ALUA >> 1) + ((2^ALUB)-1);end
-          //C = (WIDTH<ALUB) ? 1 : ALUA[ALUB-1];end//Ultimo digito en moverse
+        if(ALUFlagIn)
+          ALUResult = (ALUA >> ALUB) | (~((1 << (WIDTH - ALUB)) - 1));//mueve a la derecha y rellena con 1
         else ALUResult = ALUA >> ALUB;
+        
       default: ALUResult = '0; 
     endcase
   end
-  assign Z = (ALUResult!=0) ? 0 : 1;
-  assign C = (ALUControl=='h8) ? (WIDTH<ALUB ? 1 : ALUA[WIDTH-ALUB]):(WIDTH<ALUB ? 0 : ALUA[ALUB-1]);
+  assign Z = (ALUResult!=0) ? 0 : 1;// es 1 si el ALUResult es 0
+  assign C = (ALUControl=='h8) ? (WIDTH<ALUB ? 1 : ALUA[WIDTH-ALUB]):(ALUControl=='h9)? (WIDTH<ALUB ? 0 : ALUA[ALUB-1]) : 0;//toma el valor del ultimo digito desplazado por las funciones 'h8 y 'h9
 
 endmodule 

@@ -14,7 +14,7 @@ module TB#(parameter int unsigned WIDTH=4);
 
     reg [WIDTH-1:0] ALUA;
     reg [WIDTH-1:0] ALUB;
-    reg [31:0] ALUControl;
+    reg [3:0] ALUControl;
     reg ALUFlagIn;
     wire [WIDTH-1:0] ALUResult;//salida 1
     wire C;//salida 2
@@ -34,17 +34,17 @@ module TB#(parameter int unsigned WIDTH=4);
         ALUControl <= 'h0;
         ALUFlagIn <= 0;
 
-        for (int i =0 ; i<25;i++ ) begin
+        for (int i =0 ; i<50;i++ ) begin
             ALUA<=$random;
             ALUB<=$random;
             ALUFlagIn <=$random;
-            #5 ALUControl <= $random;
+            #5 ALUControl <= $urandom_range(0,10);
         end
         #5 $finish;
     end
     initial begin
-        $dumpfile("Testbench.vcd");
-        $dumpvars(0,Testbench);
+        $dumpfile("TB.vcd");
+        $dumpvars(0,TB);
     end
 
 endmodule

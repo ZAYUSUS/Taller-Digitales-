@@ -26,7 +26,7 @@ TOP_DESIGN = ALUP
 TOP_TB     = TB
 
 #nombre del vcd que va a generar el tb
-VCD_FILE = Testbench.vcd
+VCD_FILE = TB.vcd
 
 
 all: synth pnr bitstream load
