@@ -6,7 +6,7 @@ FAMILY = GW1N-9C
 DEVICE = GW1NR-LV9QN88PC6/I5
 
 #Nombre del proyecto... Acá ponen el nombre que deseen.
-PROYECT = Mux4:1
+PROYECT = Mux4-1
 
 #Fuentes de diseno
 SOURCES := $(wildcard ../design/*.v ../design/*.sv) #Todas las fuentes .v o .sv que estan en design
@@ -26,7 +26,7 @@ TOP_DESIGN = Multi4
 TOP_TB     = Testbench
 
 #nombre del vcd que va a generar el tb
-VCD_FILE = Testbench
+VCD_FILE = Testbench.vcd
 
 
 all: synth pnr bitstream load

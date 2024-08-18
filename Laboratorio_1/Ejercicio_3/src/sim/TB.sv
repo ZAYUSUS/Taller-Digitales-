@@ -21,39 +21,39 @@
 
 //se inicializan los registros para variables de entrada y de selecci�n
 // se declaran las variables de salida
-module Testbench#(int unsigned WIDTH=16);//WIDTH:tamaño de los buses
-    reg [WIDTH-1:0] a;
-    reg [WIDTH-1:0] b;
-    reg [WIDTH-1:0] c;
-    reg [WIDTH-1:0] d;
-    wire [WIDTH-1:0] out;
-    reg [1:0] select;
+module Testbench#(parameter int unsigned WIDTH=4);//WIDTH:tamaño de los buses
+    reg [WIDTH-1:0] A;
+    reg [WIDTH-1:0] B;
+    reg [WIDTH-1:0] C;
+    reg [WIDTH-1:0] D;
+    wire [WIDTH-1:0] Y;
+    reg [1:0] S;
     integer i;
     
     //Se crea el mux que se utilizar� en las prubeas
-    Multi4 mux0( .select(select),
-     .a(a),
-     .b(b),
-     .c(c),
-     .d(d),
-     .out(out));
+    Multi4 mux0( .S(S),
+     .A(A),
+     .B(B),
+     .C(D),
+     .D(D),
+     .Y(Y));
     
     initial begin 
     //Se inicia el selector en 0 y se otorgan valores aleatorios a los registros
-        select <= 0;
+        S <= 0;
         //cambia el valor de select luego de 5ns
         for( i=0;i<50;i=i+1)begin
-             a <= $random;
-             b <= $random;
-             c <= $random;
-             d <= $random;
-            #5 select<= $random;
+             A <= $random;
+             B <= $random;
+             C <= $random;
+             D <= $random;
+            #5 S<= $random;
         end
     // se termina la simulaci�n luego de hacer un barrido por las entradas del mux
         #5 $finish;    end
     initial begin
-        $dumpfile("Multi4.vcd");
-        $dumpvars(0,Multi4);
+        $dumpfile("Testbench.vcd");
+        $dumpvars(0,Testbench);
     end
 
 endmodule
