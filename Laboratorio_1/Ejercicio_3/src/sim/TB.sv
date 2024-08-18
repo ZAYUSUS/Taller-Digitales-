@@ -32,21 +32,21 @@ module Testbench#(parameter int unsigned WIDTH=4);//WIDTH:tamaño de los buses
     
     //Se crea el mux que se utilizar� en las prubeas
     Multi4 mux0( .S(S),
-     .A(A),
-     .B(B),
-     .C(D),
-     .D(D),
-     .Y(Y));
+    .A(A),
+    .B(B),
+    .C(D),
+    .D(D),
+    .Y(Y));
     
     initial begin 
     //Se inicia el selector en 0 y se otorgan valores aleatorios a los registros
         S <= 0;
         //cambia el valor de select luego de 5ns
         for( i=0;i<50;i=i+1)begin
-             A <= $random;
-             B <= $random;
-             C <= $random;
-             D <= $random;
+            A <= $random;
+            B <= $random;
+            C <= $random;
+            D <= $random;
             #5 S<= $random;
         end
     // se termina la simulaci�n luego de hacer un barrido por las entradas del mux
