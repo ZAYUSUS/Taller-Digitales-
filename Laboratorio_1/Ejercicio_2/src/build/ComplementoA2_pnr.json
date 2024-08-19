@@ -1,0 +1,1050 @@
+{
+  "creator": "Next Generation Place and Route (Version nextpnr-0.5-34-ga93f49eb)",
+  "modules": {
+    "top": {
+      "settings": {
+        "route": "00000000000000000000000000000001",
+        "router/tmg_ripup": "0 ",
+        "router1/useEstimate": "1 ",
+        "router1/fullCleanupReroute": "1 ",
+        "router1/cleanupReroute": "1 ",
+        "router1/maxIterCnt": "200",
+        "place": "00000000000000000000000000000001",
+        "placer1/startTemp": "1.000000",
+        "placer1/budgetBased": "0 ",
+        "placer1/minBelsForGridPick": "64",
+        "placer1/netShareWeight": "0.000000",
+        "placer1/constraintWeight": "10.000000",
+        "placerHeap/cellPlacementTimeout": "8",
+        "placerHeap/netShareWeight": "0.000000",
+        "placerHeap/parallelRefine": "0 ",
+        "pack": "00000000000000000000000000000001",
+        "cst": "00000000000000000000000000000001",
+        "synth": "00000000000000000000000000000001",
+        "placerHeap/timingWeight": "10 ",
+        "placerHeap/criticalityExponent": "2",
+        "placerHeap/beta": "0.900000",
+        "placerHeap/alpha": "0.100000",
+        "seed": "01010011010110001001011110010011",
+        "arch.type": "none",
+        "arch.name": "ARCHNAME",
+        "router": "router1",
+        "placer": "heap",
+        "auto_freq": "00000000000000000000000000000000",
+        "slack_redist_iter": "00000000000000000000000000000000",
+        "timing_driven": "00000000000000000000000000000001",
+        "target_freq": "27000000.000000",
+        "arch.enable-auto-longwires": "00000000000000000000000000000000",
+        "arch.enable-globals": "00000000000000000000000000000001"
+      },
+      "attributes": {
+        "top": "00000000000000000000000000000001",
+        "src": "../design/ComplementoA2.sv:3.1-23.10"
+      },
+      "ports": {
+        "LED3": {
+          "direction": "output",
+          "bits": [ 3877468 ]
+        },
+        "LED2": {
+          "direction": "output",
+          "bits": [ 3877467 ]
+        },
+        "LED1": {
+          "direction": "output",
+          "bits": [ 3877466 ]
+        },
+        "LED0": {
+          "direction": "output",
+          "bits": [ 3877465 ]
+        },
+        "Interruptor3": {
+          "direction": "input",
+          "bits": [ 3877464 ]
+        },
+        "Interruptor2": {
+          "direction": "input",
+          "bits": [ 3877463 ]
+        },
+        "Interruptor1": {
+          "direction": "input",
+          "bits": [ 3877462 ]
+        },
+        "Interruptor0": {
+          "direction": "input",
+          "bits": [ 3877461 ]
+        }
+      },
+      "cells": {
+        "LED0_OBUF_O_I_LUT1_F_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C4_SLICE1",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877472 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877475 ]
+          }
+        },
+        "LED1_OBUF_O_I_LUT1_F_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R18C4_SLICE7",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877478 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877480 ]
+          }
+        },
+        "LED2_OBUF_O_I_LUT1_F_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R21C5_SLICE0",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877482 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877484 ]
+          }
+        },
+        "numBinario_LUT1_I0_1_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R25C6_SLICE5",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877494 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877509 ]
+          }
+        },
+        "LED3_OBUF_O_I_LUT1_F_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C3_SLICE1",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877486 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877488 ]
+          }
+        },
+        "numBinario_LUT1_I0_3_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C6_SLICE1",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877503 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877513 ]
+          }
+        },
+        "numBinario_LUT1_I0_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C6_SLICE3",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877505 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877515 ]
+          }
+        },
+        "numBinario_LUT1_I0_2_LC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "01"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C6_SLICE7",
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "C:\\OSS-CA~1\\bin\\../share/yosys/gowin/cells_map.v:135.23-136.15"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877499 ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [ 3877511 ]
+          }
+        },
+        "numBinario_IBUF_O_2$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000000",
+            "INPUT_USED": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R29C8_IOBB",
+            "src": "../design/ComplementoA2.sv:6.12-6.24",
+            "&IO_TYPE=LVCMOS33": "00000000000000000000000000000001",
+            "&PULL_MODE=DOWN": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [ 3877513 ],
+            "OEN": [  ],
+            "I": [  ],
+            "PAD": [  ]
+          }
+        },
+        "numBinario_IBUF_O_3$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000000",
+            "INPUT_USED": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R29C8_IOBA",
+            "src": "../design/ComplementoA2.sv:5.12-5.24",
+            "&IO_TYPE=LVCMOS33": "00000000000000000000000000000001",
+            "&PULL_MODE=DOWN": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [ 3877515 ],
+            "OEN": [  ],
+            "I": [  ],
+            "PAD": [  ]
+          }
+        },
+        "numBinario_IBUF_O_1$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000000",
+            "INPUT_USED": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R29C11_IOBA",
+            "src": "../design/ComplementoA2.sv:7.12-7.24",
+            "&IO_TYPE=LVCMOS33": "00000000000000000000000000000001",
+            "&PULL_MODE=DOWN": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [ 3877511 ],
+            "OEN": [  ],
+            "I": [  ],
+            "PAD": [  ]
+          }
+        },
+        "numBinario_IBUF_O$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000000",
+            "INPUT_USED": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R29C11_IOBB",
+            "src": "../design/ComplementoA2.sv:8.12-8.24",
+            "&IO_TYPE=LVCMOS33": "00000000000000000000000000000001",
+            "&PULL_MODE=DOWN": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [ 3877509 ],
+            "OEN": [  ],
+            "I": [  ],
+            "PAD": [  ]
+          }
+        },
+        "complemento2_ALU_SUM_3_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "00000000000000000000000000000010",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE1"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877475 ],
+            "CLK": [  ],
+            "D": [ 3877535 ],
+            "C": [ 3877535 ],
+            "B": [ 3877505 ],
+            "A": [ 3877535 ]
+          }
+        },
+        "LED3_OBUF_O$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000001",
+            "INPUT_USED": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R22C1_IOBB",
+            "src": "../design/ComplementoA2.sv:13.12-13.16",
+            "&DRIVE=8": "00000000000000000000000000000001",
+            "&IO_TYPE=LVCMOS18": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [  ],
+            "OEN": [  ],
+            "I": [ 3877486 ],
+            "PAD": [  ]
+          }
+        },
+        "LED2_OBUF_O$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000001",
+            "INPUT_USED": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R21C1_IOBB",
+            "src": "../design/ComplementoA2.sv:12.12-12.16",
+            "&DRIVE=8": "00000000000000000000000000000001",
+            "&IO_TYPE=LVCMOS18": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [  ],
+            "OEN": [  ],
+            "I": [ 3877482 ],
+            "PAD": [  ]
+          }
+        },
+        "LED1_OBUF_O$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000001",
+            "INPUT_USED": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R16C1_IOBB",
+            "src": "../design/ComplementoA2.sv:11.12-11.16",
+            "&DRIVE=8": "00000000000000000000000000000001",
+            "&IO_TYPE=LVCMOS18": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [  ],
+            "OEN": [  ],
+            "I": [ 3877478 ],
+            "PAD": [  ]
+          }
+        },
+        "LED0_OBUF_O$iob": {
+          "hide_name": 0,
+          "type": "IOB",
+          "parameters": {
+            "ENABLE_USED": "00000000000000000000000000000000",
+            "OUTPUT_USED": "00000000000000000000000000000001",
+            "INPUT_USED": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000110",
+            "NEXTPNR_BEL": "R15C1_IOBA",
+            "src": "../design/ComplementoA2.sv:10.12-10.16",
+            "&DRIVE=8": "00000000000000000000000000000001",
+            "&IO_TYPE=LVCMOS18": "00000000000000000000000000000001"
+          },
+          "port_directions": {
+            "O": "output",
+            "OEN": "input",
+            "I": "input",
+            "PAD": "inout"
+          },
+          "connections": {
+            "O": [  ],
+            "OEN": [  ],
+            "I": [ 3877472 ],
+            "PAD": [  ]
+          }
+        },
+        "complemento2_ALU_SUM_2_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "00000000000000000000000000000010",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE2"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877480 ],
+            "CLK": [  ],
+            "D": [ 3877535 ],
+            "C": [ 3877535 ],
+            "B": [ 3877503 ],
+            "A": [ 3877533 ]
+          }
+        },
+        "complemento2_ALU_SUM_1_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "00000000000000000000000000000010",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE3"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877484 ],
+            "CLK": [  ],
+            "D": [ 3877535 ],
+            "C": [ 3877535 ],
+            "B": [ 3877499 ],
+            "A": [ 3877533 ]
+          }
+        },
+        "complemento2_ALU_SUM_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "00000000000000000000000000000010",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE4"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [ 3877488 ],
+            "CLK": [  ],
+            "D": [ 3877535 ],
+            "C": [ 3877535 ],
+            "B": [ 3877494 ],
+            "A": [ 3877533 ]
+          }
+        },
+        "$PACKER_VCC": {
+          "hide_name": 1,
+          "type": "VCC",
+          "parameters": {
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "VCC"
+          },
+          "port_directions": {
+            "V": "output"
+          },
+          "connections": {
+            "V": [ 3877535 ]
+          }
+        },
+        "complemento2_ALU_SUM_DUMMY_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "C2L",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE5"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [  ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [  ],
+            "B": [  ],
+            "A": [  ]
+          }
+        },
+        "$PACKER_GND": {
+          "hide_name": 1,
+          "type": "GND",
+          "parameters": {
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "GND"
+          },
+          "port_directions": {
+            "G": "output"
+          },
+          "connections": {
+            "G": [ 3877533 ]
+          }
+        },
+        "complemento2_ALU_SUM_3_HEAD_ALULC": {
+          "hide_name": 0,
+          "type": "SLICE",
+          "parameters": {
+            "ALU_MODE": "C2L",
+            "FF_TYPE": "DFF",
+            "FF_USED": "00000000000000000000000000000000",
+            "INIT": "00000000000000000000000000000000"
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R22C5_SLICE0"
+          },
+          "port_directions": {
+            "LSR": "input",
+            "CE": "input",
+            "Q": "output",
+            "F": "output",
+            "CLK": "input",
+            "D": "input",
+            "C": "input",
+            "B": "input",
+            "A": "input"
+          },
+          "connections": {
+            "LSR": [  ],
+            "CE": [  ],
+            "Q": [  ],
+            "F": [  ],
+            "CLK": [  ],
+            "D": [  ],
+            "C": [ 3877535 ],
+            "B": [  ],
+            "A": [  ]
+          }
+        },
+        "GSR": {
+          "hide_name": 0,
+          "type": "GSR",
+          "parameters": {
+          },
+          "attributes": {
+            "BEL_STRENGTH": "00000000000000000000000000000001",
+            "NEXTPNR_BEL": "R1C1_GSR0"
+          },
+          "port_directions": {
+            "GSRI": "input"
+          },
+          "connections": {
+            "GSRI": [ 3877535 ]
+          }
+        }
+      },
+      "netnames": {
+        "complemento2_ALU_SUM_I1[0]": {
+          "hide_name": 0,
+          "bits": [ 3877505 ] ,
+          "attributes": {
+            "ROUTING": "R22C6_F3;;1;R22C6_W23;R22C6_F3_W230;1;R22C5_B1;R22C5_W231_B1;1",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:32.24-32.25",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2_ALU_SUM_I1[1]": {
+          "hide_name": 0,
+          "bits": [ 3877503 ] ,
+          "attributes": {
+            "ROUTING": "R22C6_F1;;1;R22C6_W21;R22C6_F1_W210;1;R22C5_B2;R22C5_W211_B2;1",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:32.24-32.25",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2_ALU_SUM_3_COUT[1]": {
+          "hide_name": 0,
+          "bits": [ 3877502 ] ,
+          "attributes": {
+            "ROUTING": " ",
+            "unused_bits": "3",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:38.25-38.27",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2_ALU_SUM_I1[2]": {
+          "hide_name": 0,
+          "bits": [ 3877499 ] ,
+          "attributes": {
+            "ROUTING": "R22C6_F7;;1;R22C6_EW10;R22C6_F7_EW10;1;R22C5_B3;R22C5_W111_B3;1",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:32.24-32.25",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2_ALU_SUM_3_COUT[2]": {
+          "hide_name": 0,
+          "bits": [ 3877498 ] ,
+          "attributes": {
+            "ROUTING": " ",
+            "unused_bits": "3",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:38.25-38.27",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "$PACKER_VCC_NET": {
+          "hide_name": 1,
+          "bits": [ 3877535 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_C1;R22C5_X04_C1;1;R22C5_C0;R22C5_X04_C0;1;R22C5_D3;R22C5_X08_D3;1;R1C1_W26;R1C1_VCC_W260;1;R1C1_C4;R1C1_E261_C4;1;R22C5_D2;R22C5_X03_D2;1;R22C5_D1;R22C5_X08_D1;1;R22C5_X08;R22C5_VCC_X08;1;R22C5_C4;R22C5_X08_C4;1;R22C5_C3;R22C5_X04_C3;1;R22C5_X03;R22C5_VCC_X03;1;R22C5_A1;R22C5_X03_A1;1;R22C5_C2;R22C5_X04_C2;1;VCC;;1;R22C5_X04;R22C5_VCC_X04;1;R22C5_D4;R22C5_X04_D4;1"
+          }
+        },
+        "complemento2_ALU_SUM_I1[3]": {
+          "hide_name": 0,
+          "bits": [ 3877494 ] ,
+          "attributes": {
+            "ROUTING": "R25C6_F5;;1;R25C6_W10;R25C6_F5_W100;1;R25C5_N24;R25C5_W101_N240;1;R23C5_N25;R23C5_N242_N250;1;R22C5_B4;R22C5_N251_B4;1",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:32.24-32.25",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "$PACKER_GND_NET": {
+          "hide_name": 1,
+          "bits": [ 3877533 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_A2;R22C5_N210_A2;1;R22C5_N21;R22C5_VSS_N210;1;R22C5_A3;R22C5_N210_A3;1;VSS;;1;R22C5_W21;R22C5_VSS_W210;1;R22C5_A4;R22C5_W210_A4;1"
+          }
+        },
+        "complemento2_ALU_SUM_COUT[3]": {
+          "hide_name": 0,
+          "bits": [ 3877492 ] ,
+          "attributes": {
+            "ROUTING": " ",
+            "unused_bits": "3",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:38.25-38.27",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2_ALU_SUM_3_COUT[3]": {
+          "hide_name": 0,
+          "bits": [ 3877491 ] ,
+          "attributes": {
+            "ROUTING": " ",
+            "unused_bits": "3",
+            "src": "../design/ComplementoA2.sv:19.27-19.48|C:\\OSS-CA~1\\bin\\../share/yosys/gowin/arith_map.v:38.25-38.27",
+            "force_downto": "00000000000000000000000000000001"
+          }
+        },
+        "complemento2[3]": {
+          "hide_name": 0,
+          "bits": [ 3877488 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_F4;;1;R22C5_W24;R22C5_F4_W240;1;R22C3_X03;R22C3_W242_X03;1;R22C3_A1;R22C3_X03_A1;1",
+            "src": "../design/ComplementoA2.sv:18.16-18.28"
+          }
+        },
+        "numBinario[3]": {
+          "hide_name": 0,
+          "bits": [ 3877509 ] ,
+          "attributes": {
+            "ROUTING": "R29C11_Q6;;1;R29C11_N26;R29C11_Q6_N260;1;R27C11_N26;R27C11_N262_N260;1;R25C11_W26;R25C11_N262_W260;1;R25C9_W27;R25C9_W262_W270;1;R25C7_W27;R25C7_W272_W270;1;R25C6_A5;R25C6_W271_A5;1",
+            "src": "../design/ComplementoA2.sv:16.16-16.26"
+          }
+        },
+        "LED3_OBUF_O_I": {
+          "hide_name": 0,
+          "bits": [ 3877486 ] ,
+          "attributes": {
+            "ROUTING": "R22C3_F1;;1;R22C3_W21;R22C3_F1_W210;1;R22C1_X06;R22C1_W212_X06;1;R22C1_D1;R22C1_X06_D1;1"
+          }
+        },
+        "complemento2[2]": {
+          "hide_name": 0,
+          "bits": [ 3877484 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_F3;;1;R22C5_SN10;R22C5_F3_SN10;1;R21C5_A0;R21C5_N111_A0;1",
+            "src": "../design/ComplementoA2.sv:18.16-18.28"
+          }
+        },
+        "numBinario[1]": {
+          "hide_name": 0,
+          "bits": [ 3877513 ] ,
+          "attributes": {
+            "ROUTING": "R29C8_Q6;;1;R29C8_W26;R29C8_Q6_W260;1;R29C6_N26;R29C6_W262_N260;1;R27C6_N27;R27C6_N262_N270;1;R25C6_N27;R25C6_N272_N270;1;R23C6_N27;R23C6_N272_N270;1;R22C6_A1;R22C6_N271_A1;1",
+            "src": "../design/ComplementoA2.sv:16.16-16.26"
+          }
+        },
+        "LED2_OBUF_O_I": {
+          "hide_name": 0,
+          "bits": [ 3877482 ] ,
+          "attributes": {
+            "ROUTING": "R21C5_F0;;1;R21C5_W20;R21C5_F0_W200;1;R21C3_W20;R21C3_W202_W200;1;R21C1_D1;R21C1_W202_D1;1"
+          }
+        },
+        "complemento2[1]": {
+          "hide_name": 0,
+          "bits": [ 3877480 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_F2;;1;R22C5_N22;R22C5_F2_N220;1;R20C5_N23;R20C5_N222_N230;1;R18C5_W23;R18C5_N232_W230;1;R18C4_X06;R18C4_W231_X06;1;R18C4_A7;R18C4_X06_A7;1",
+            "src": "../design/ComplementoA2.sv:18.16-18.28"
+          }
+        },
+        "numBinario[2]": {
+          "hide_name": 0,
+          "bits": [ 3877511 ] ,
+          "attributes": {
+            "ROUTING": "R29C11_F6;;1;R29C11_W26;R29C11_F6_W260;1;R29C9_N26;R29C9_W262_N260;1;R27C9_N26;R27C9_N262_N260;1;R25C9_N26;R25C9_N262_N260;1;R23C9_N26;R23C9_N262_N260;1;R22C9_W26;R22C9_N261_W260;1;R22C7_W27;R22C7_W262_W270;1;R22C6_A7;R22C6_W271_A7;1",
+            "src": "../design/ComplementoA2.sv:16.16-16.26"
+          }
+        },
+        "LED1_OBUF_O_I": {
+          "hide_name": 0,
+          "bits": [ 3877478 ] ,
+          "attributes": {
+            "ROUTING": "R18C4_F7;;1;R18C4_N27;R18C4_F7_N270;1;R16C4_W27;R16C4_N272_W270;1;R16C2_W22;R16C2_W272_W220;1;R16C1_D1;R16C1_E222_D1;1"
+          }
+        },
+        "complemento2[0]": {
+          "hide_name": 0,
+          "bits": [ 3877475 ] ,
+          "attributes": {
+            "ROUTING": "R22C5_F1;;1;R22C5_W13;R22C5_F1_W130;1;R22C4_A1;R22C4_W131_A1;1",
+            "src": "../design/ComplementoA2.sv:18.16-18.28"
+          }
+        },
+        "numBinario[0]": {
+          "hide_name": 0,
+          "bits": [ 3877515 ] ,
+          "attributes": {
+            "ROUTING": "R29C8_F6;;1;R29C8_N26;R29C8_F6_N260;1;R27C8_W26;R27C8_N262_W260;1;R27C6_N26;R27C6_W262_N260;1;R25C6_N26;R25C6_N262_N260;1;R23C6_N26;R23C6_N262_N260;1;R22C6_X05;R22C6_N261_X05;1;R22C6_A3;R22C6_X05_A3;1",
+            "src": "../design/ComplementoA2.sv:16.16-16.26"
+          }
+        },
+        "LED0_OBUF_O_I": {
+          "hide_name": 0,
+          "bits": [ 3877472 ] ,
+          "attributes": {
+            "ROUTING": "R22C4_F1;;1;R22C4_W21;R22C4_F1_W210;1;R22C2_N21;R22C2_W212_N210;1;R20C2_N21;R20C2_N212_N210;1;R18C2_N24;R18C2_N212_N240;1;R16C2_N25;R16C2_N242_N250;1;R15C2_W25;R15C2_N251_W250;1;R15C1_A0;R15C1_W251_A0;1"
+          }
+        }
+      }
+    }
+  }
+}

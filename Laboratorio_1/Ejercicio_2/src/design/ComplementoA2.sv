@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Ejercicio2 (
+module ComplementoA2 (
 //Entradas:
     input  Interruptor0,
     input  Interruptor1,
@@ -18,6 +18,6 @@ module Ejercicio2 (
     wire [3:0] complemento2;
     assign complemento2 = ~numBinario + 4'b0001;
 //Se asigna cada bit del resultado del complemento a 2 a las salidas de los LEDs.
-    assign {LED3, LED2, LED1, LED0} = complemento2;
+    assign {LED3, LED2, LED1, LED0} = ~complemento2;
 
 endmodule

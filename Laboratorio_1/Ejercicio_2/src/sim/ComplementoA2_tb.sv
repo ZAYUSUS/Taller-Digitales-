@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 
-module Ejercicio2_tb;
+module ComplementoA2_tb;
     // Declaración de señales
     reg  Interruptor0, Interruptor1, Interruptor2, Interruptor3; // Entradas de 1 bit
     wire LED0, LED1, LED2, LED3; // Salidas de 1 bit
 
     // Instanciación del módulo a probar
-    Ejercicio2 uut (
+    ComplementoA2 uut (
         .Interruptor0(Interruptor0),
         .Interruptor1(Interruptor1),
         .Interruptor2(Interruptor2),
@@ -70,5 +70,8 @@ module Ejercicio2_tb;
         
         $finish; // Finalizar la simulación
     end
-
+    initial begin
+        $dumpfile("ComplementoA2_tb.vcd");  // For waveform viewing
+        $dumpvars(0,ComplementoA2_tb);
+    end
 endmodule
