@@ -40,7 +40,6 @@ always_comb begin
       default: ALUResult = '0; 
     endcase
   end
-  assign Z = ~((ALUResult!=0) ? 0 : 1);// es 1 si el ALUResult es 0
-  assign C = ~((ALUControl=='h8) ? (WIDTH<ALUB ? 1 : ALUA[WIDTH-ALUB]):(ALUControl=='h9)? (WIDTH<ALUB ? 0 : ALUA[ALUB-1]) : 0);//toma el valor del ultimo digito desplazado por las funciones 'h8 y 'h9
-  assign ALUResult = ~ALUResult;//NIega la salida para ser compatible con la FPGA
+  assign Z = (ALUResult!=0) ? 0 : 1;// es 1 si el ALUResult es 0
+  assign C = (ALUControl=='h8) ? (WIDTH<ALUB ? 1 : ALUA[WIDTH-ALUB]):(ALUControl=='h9)? (WIDTH<ALUB ? 0 : ALUA[ALUB-1]) : 0;//toma el valor del ultimo digito desplazado por las funciones 'h8 y 'h9
 endmodule 
