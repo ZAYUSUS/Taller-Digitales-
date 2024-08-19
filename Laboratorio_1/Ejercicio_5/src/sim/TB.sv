@@ -19,6 +19,7 @@ module TB#(parameter int unsigned WIDTH=4);
     wire [WIDTH-1:0] ALUResult;//salida 1
     wire C;//salida 2
     wire Z;
+    reg [WIDTH-1:0] i;
 
     ALUP alu0(.ALUA(ALUA),
             .ALUB(ALUB),
@@ -33,12 +34,30 @@ module TB#(parameter int unsigned WIDTH=4);
         ALUB<=0;
         ALUControl <= 'h0;
         ALUFlagIn <= 0;
-
-        for (int i =0 ; i<50;i++ ) begin
+        //Prueba 'h0
+        for (int i =0 ; i<4;i++ ) begin
             ALUA<=$random;
             ALUB<=$random;
             ALUFlagIn <=$random;
-            #5 ALUControl <= $urandom_range(0,10);
+            #5 ALUControl<='h1;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h2;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h3;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h4;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h5;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h6;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h7;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h8;
+            ALUFlagIn <=$random;
+            #5 ALUControl<='h9;
+            ALUFlagIn <=$random;
+            #5;
         end
         #5 $finish;
     end
