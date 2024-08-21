@@ -1,0 +1,202 @@
+$date
+	Wed Aug 21 03:28:56 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module modulacionPWM_tb $end
+$var wire 1 ! salidaPWM $end
+$var reg 1 " Interruptor0 $end
+$var reg 1 # Interruptor1 $end
+$var reg 1 $ Interruptor2 $end
+$var reg 1 % Interruptor3 $end
+$var reg 1 & clk $end
+$scope module uut $end
+$var wire 1 " Interruptor0 $end
+$var wire 1 # Interruptor1 $end
+$var wire 1 $ Interruptor2 $end
+$var wire 1 % Interruptor3 $end
+$var wire 1 & clk $end
+$var wire 4 ' numBinario [3:0] $end
+$var wire 16 ( Comparador [15:0] $end
+$var reg 16 ) Contador [15:0] $end
+$var reg 1 ! salidaPWM $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 )
+b0 (
+b0 '
+0&
+0%
+0$
+0#
+0"
+x!
+$end
+#18500
+0!
+b1 )
+1&
+#37000
+0&
+#55500
+b10 )
+1&
+#74000
+0&
+#92500
+b11 )
+1&
+#111000
+0&
+#129500
+b100 )
+1&
+#148000
+0&
+#166500
+b101 )
+1&
+#185000
+0&
+#203500
+b110 )
+1&
+#210000
+b11010010111 (
+b1 '
+1"
+#222000
+0&
+#240500
+1!
+b111 )
+1&
+#259000
+0&
+#277500
+b1000 )
+1&
+#296000
+0&
+#314500
+b1001 )
+1&
+#333000
+0&
+#351500
+b1010 )
+1&
+#370000
+0&
+#388500
+b1011 )
+1&
+#407000
+0&
+#410000
+b1101001011100 (
+1$
+b100 '
+0"
+#425500
+b1100 )
+1&
+#444000
+0&
+#462500
+b1101 )
+1&
+#481000
+0&
+#499500
+b1110 )
+1&
+#518000
+0&
+#536500
+b1111 )
+1&
+#555000
+0&
+#573500
+b10000 )
+1&
+#592000
+0&
+#610000
+b11010010111000 (
+1%
+b1000 '
+0$
+#610500
+b10001 )
+1&
+#629000
+0&
+#647500
+b10010 )
+1&
+#666000
+0&
+#684500
+b10011 )
+1&
+#703000
+0&
+#721500
+b10100 )
+1&
+#740000
+0&
+#758500
+b10101 )
+1&
+#777000
+0&
+#795500
+b10110 )
+1&
+#810000
+b110001011011001 (
+1$
+1#
+b1111 '
+1"
+#814000
+0&
+#832500
+b10111 )
+1&
+#851000
+0&
+#869500
+b11000 )
+1&
+#888000
+0&
+#906500
+b11001 )
+1&
+#925000
+0&
+#943500
+b11010 )
+1&
+#962000
+0&
+#980500
+b11011 )
+1&
+#999000
+0&
+#1010000
