@@ -24,9 +24,9 @@ module modulacionPWM (
     always @(posedge clk) begin
         Contador <= Contador + 1;
         if (Contador < Comparador)
-            salidaPWM <= 1'b1;
-        else
             salidaPWM <= 1'b0;
+        else
+            salidaPWM <= 1'b1;
         //Reiniciar contador (1 milisegundo)
         if (Contador >= 27000)
             Contador <= 16'd0; //Contador=0
