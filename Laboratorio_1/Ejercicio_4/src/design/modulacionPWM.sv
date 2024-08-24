@@ -19,7 +19,6 @@ module modulacionPWM (
 
     // Calcular el valor de comparación basado en el código de 4 bits
     assign Comparador = numBinario * (27000 / 16); // Multiplica el código por el ancho de pulso
- 
     // Contador del ciclo de PWM
     always @(posedge clk) begin
         Contador <= Contador + 1;
@@ -31,5 +30,4 @@ module modulacionPWM (
         if (Contador >= 27000)
             Contador <= 16'd0; //Contador=0
     end   
-    
 endmodule

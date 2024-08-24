@@ -1,13 +1,13 @@
-IO_LOC  "Interruptor0" 26;
+IO_LOC  "Interruptor0" 25;
 IO_PORT "Interruptor0" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 
-IO_LOC  "Interruptor1" 25;
+IO_LOC  "Interruptor1" 26;
 IO_PORT "Interruptor1" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 
-IO_LOC  "Interruptor2" 39;
+IO_LOC  "Interruptor2" 27;
 IO_PORT "Interruptor2" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 
-IO_LOC  "Interruptor3" 36;
+IO_LOC  "Interruptor3" 28;
 IO_PORT "Interruptor3" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 
 IO_LOC  "salidaPWM" 10;
