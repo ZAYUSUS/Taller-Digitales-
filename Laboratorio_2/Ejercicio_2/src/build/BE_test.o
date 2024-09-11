@@ -1,0 +1,95 @@
+#! /home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/bin/vvp
+:ivl_version "13.0 (devel)" "(s20221226-103-g418bbc14b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 4;
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/system.vpi";
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/v2005_math.vpi";
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/va_math.vpi";
+:vpi_module "/home/bryan/Documents/OneDrive/TEC/VV_Semestre/Taller_Digitales/oss-cad-suite/lib/ivl/v2009.vpi";
+S_0x5555565a7ad0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x5555565a7c60 .scope module, "KBE_TB" "KBE_TB" 3 4;
+ .timescale -3 -4;
+v0x5555565f6250_0 .net "Data_Available", 0 0, v0x5555565f5f90_0;  1 drivers
+v0x5555565f6320_0 .net "Inhibit", 0 0, v0x5555565f6070_0;  1 drivers
+v0x5555565f63f0_0 .var "KeyP", 0 0;
+S_0x5555565e2cb0 .scope begin, "$ivl_for_loop0" "$ivl_for_loop0" 3 17, 3 17 0, S_0x5555565a7c60;
+ .timescale -3 -4;
+v0x5555565e2e90_0 .var/2s "i", 31 0;
+S_0x5555565f5d00 .scope module, "be0" "KBE" 3 9, 4 4 0, S_0x5555565a7c60;
+ .timescale -3 -4;
+    .port_info 0 /INPUT 1 "KeyP";
+    .port_info 1 /OUTPUT 1 "Data_Available";
+    .port_info 2 /OUTPUT 1 "Inhibit";
+v0x5555565f5f90_0 .var "Data_Available", 0 0;
+v0x5555565f6070_0 .var "Inhibit", 0 0;
+v0x5555565f6130_0 .net "KeyP", 0 0, v0x5555565f63f0_0;  1 drivers
+E_0x5555565e3690 .event anyedge, v0x5555565f6130_0;
+    .scope S_0x5555565f5d00;
+T_0 ;
+    %wait E_0x5555565e3690;
+    %delay 200, 0;
+    %load/vec4 v0x5555565f6130_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5555565f5f90_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5555565f6070_0, 0, 1;
+    %jmp T_0.1;
+T_0.0 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5555565f5f90_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5555565f6070_0, 0, 1;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x5555565a7c60;
+T_1 ;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0x5555565f63f0_0, 0;
+    %fork t_1, S_0x5555565e2cb0;
+    %jmp t_0;
+    .scope S_0x5555565e2cb0;
+t_1 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5555565e2e90_0, 0, 32;
+T_1.0 ; Top of for-loop 
+    %load/vec4 v0x5555565e2e90_0;
+    %cmpi/s 10, 0, 32;
+    %jmp/0xz T_1.1, 5;
+    %vpi_func 3 18 "$random" 32 {0 0 0};
+    %pad/s 1;
+    %assign/vec4 v0x5555565f63f0_0, 0;
+    %delay 250, 0;
+    %vpi_call/w 3 20 "$display", "[%0t] key=0x%0h Data Available=0x%0h Inhibit=0x%0h", $time, v0x5555565f63f0_0, v0x5555565f6250_0, v0x5555565f6320_0 {0 0 0};
+T_1.2 ; for-loop step statement
+    %load/vec4 v0x5555565e2e90_0;
+    %addi 1, 0, 32;
+    %cast2;
+    %store/vec4 v0x5555565e2e90_0, 0, 32;
+    %jmp T_1.0;
+T_1.1 ; for-loop exit label
+    %end;
+    .scope S_0x5555565a7c60;
+t_0 %join;
+    %delay 50, 0;
+    %vpi_call/w 3 22 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+    .scope S_0x5555565a7c60;
+T_2 ;
+    %vpi_call/w 3 25 "$dumpfile", "KBE_TB.vcd" {0 0 0};
+    %vpi_call/w 3 26 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x5555565a7c60 {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "../sim/TB.sv";
+    "../design/BE.sv";

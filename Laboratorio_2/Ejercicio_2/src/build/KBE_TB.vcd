@@ -1,0 +1,66 @@
+$date
+	Wed Sep 11 14:14:43 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100us
+$end
+$scope module KBE_TB $end
+$var wire 1 ! Inhibit $end
+$var wire 1 " Data_Available $end
+$var reg 1 # KeyP $end
+$scope module be0 $end
+$var wire 1 # KeyP $end
+$var reg 1 " Data_Available $end
+$var reg 1 ! Inhibit $end
+$upscope $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 $ i [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 $
+0#
+x"
+x!
+$end
+#200
+0!
+0"
+#250
+1#
+b1 $
+#450
+1"
+#500
+b10 $
+#750
+b11 $
+#1000
+b100 $
+#1250
+b101 $
+#1500
+b110 $
+#1750
+0#
+b111 $
+#1950
+0"
+#2000
+1#
+b1000 $
+#2200
+1"
+#2250
+b1001 $
+#2500
+b1010 $
+#2550
