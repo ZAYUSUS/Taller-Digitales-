@@ -55,4 +55,8 @@ module AntiReboteSincronizado_tb;
         $monitor("Time=%t : entradaAsincronica=%b, salidaSincronizada=%b", $time, entradaAsincronica, salidaSincronizada);
     end
 
+    initial begin
+        $dumpfile("AntiReboteSincronizado_tb.vcd");
+        $dumpvars(0,AntiReboteSincronizado_tb);
+    end
 endmodule
