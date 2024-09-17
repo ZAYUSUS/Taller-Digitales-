@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module ContadorPruebas(
-    input wire clk,       // Señal de reloj
+    input wire clk,       // Señal de relojp0o-
     input wire rst,       // Señal de reset activo en bajo
     input wire EN,        // Señal habilitadora activa en alto
     output reg [7:0] contador // Contador de 8 bits
@@ -17,5 +17,4 @@ module ContadorPruebas(
             contador <= contador + 1;
         end
     end
-
 endmodule
