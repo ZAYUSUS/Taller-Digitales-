@@ -47,7 +47,7 @@ module AntiReboteSincronizado(
         end 
         else begin
             // Sincronización de la señal sin rebotes (btn_stable)
-            ff1 <= btn_stable;  // Capturamos la señal btn_stable en el primer flip-flop
+            ff1 <= salidaEstable;  // Capturamos la señal btn_stable en el primer flip-flop
             ff2 <= ff1;   // Pasamos la señal a un segundo flip-flop para sincronización completa
             // La salida btn_out es la señal completamente sincronizada con el reloj
             salidaSincronizada <= ff2;
