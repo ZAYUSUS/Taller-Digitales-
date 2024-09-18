@@ -1,0 +1,171 @@
+$date
+	Mon Sep 16 20:11:22 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100us
+$end
+$scope module tb_contador $end
+$var wire 2 ! out [1:0] $end
+$var reg 1 " clk $end
+$var reg 1 # inhibit $end
+$scope module c0 $end
+$var wire 1 " clk $end
+$var wire 1 # inhibit $end
+$var reg 2 $ out [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx $
+0#
+0"
+bx !
+$end
+#10
+b0 !
+b0 $
+1"
+#20
+0"
+#30
+1"
+#40
+1#
+0"
+#50
+b1 !
+b1 $
+1"
+#60
+0"
+#70
+b10 !
+b10 $
+1"
+#80
+0"
+#90
+b11 !
+b11 $
+1"
+#100
+0"
+#110
+b0 !
+b0 $
+1"
+#120
+0"
+#130
+b1 !
+b1 $
+1"
+#140
+0"
+#150
+b10 !
+b10 $
+1"
+#160
+0"
+#170
+b11 !
+b11 $
+1"
+#180
+0"
+#190
+b0 !
+b0 $
+1"
+#200
+0#
+0"
+#210
+1"
+#220
+0"
+#230
+1"
+#240
+0"
+#250
+1"
+#260
+0"
+#270
+1"
+#280
+0"
+#290
+1"
+#300
+1#
+0"
+#310
+b1 !
+b1 $
+1"
+#320
+0"
+#330
+b10 !
+b10 $
+1"
+#340
+0"
+#350
+b11 !
+b11 $
+1"
+#360
+0"
+#370
+b0 !
+b0 $
+1"
+#380
+0"
+#390
+b1 !
+b1 $
+1"
+#400
+0"
+#410
+b10 !
+b10 $
+1"
+#420
+0"
+#430
+b11 !
+b11 $
+1"
+#440
+0"
+#450
+b0 !
+b0 $
+1"
+#460
+0"
+#470
+b1 !
+b1 $
+1"
+#480
+0"
+#490
+b10 !
+b10 $
+1"
+#500
+0"
