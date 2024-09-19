@@ -1,0 +1,89 @@
+Info: Series:GW1N-9C Device:GW1NR-9C Package:QFN88P Speed:C6/I5
+
+Info: Packing constants..
+Info: Packing Shadow RAM..
+Info: Packing GSR..
+Info: Packing IOs..
+Info: Packing diff IOs..
+Info: Packing IO logic..
+Info: Packing wide LUTs..
+Info: Packing LUT5s..
+Info: Packing LUT6s..
+Info: Packing LUT7s..
+Info: Packing LUT8s..
+Info: Packing ALUs..
+Info: Packing LUT-FFs..
+Info: Packing non-LUT FFs..
+Info: Packing PLLs..
+Info: Checksum: 0x24727387
+
+Info: Annotating ports with timing budgets for target frequency 27.00 MHz
+Info: Checksum: 0x24727387
+
+Info: Device utilisation:
+Info: 	                 VCC:     1/    1   100%
+Info: 	               SLICE:     0/ 8640     0%
+Info: 	                 IOB:    11/  274     4%
+Info: 	                ODDR:     0/  274     0%
+Info: 	           MUX2_LUT5:     0/ 4320     0%
+Info: 	           MUX2_LUT6:     0/ 2160     0%
+Info: 	           MUX2_LUT7:     0/ 1080     0%
+Info: 	           MUX2_LUT8:     0/ 1056     0%
+Info: 	                 GND:     1/    1   100%
+Info: 	                RAMW:     0/  270     0%
+Info: 	                 GSR:     1/    1   100%
+Info: 	                 OSC:     0/    1     0%
+Info: 	                rPLL:     0/    2     0%
+
+Info: Placed 7 cells based on constraints.
+Info: Creating initial analytic placement for 2 cells, random placement wirelen = 0.
+Info:     at initial placer iter 0, wirelen = 0
+Info:     at initial placer iter 1, wirelen = 0
+Info:     at initial placer iter 2, wirelen = 0
+Info:     at initial placer iter 3, wirelen = 0
+Info: Running main analytical placer, max placement attempts per cell = 10000.
+Info:     at iteration #1, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #1, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #1, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #2, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #2, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #2, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #3, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #3, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #3, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #4, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #4, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #4, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #5, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #5, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #5, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #6, type VCC: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #6, type GSR: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info:     at iteration #6, type ALL: wirelen solved = 0, spread = 0, legal = 0; time = 0.00s
+Info: HeAP Placer Time: 0.02s
+Info:   of which solving equations: 0.00s
+Info:   of which spreading cells: 0.00s
+Info:   of which strict legalisation: 0.00s
+
+Info: Running simulated annealing placer for refinement.
+Info:   at iteration #1: temp = 0.000000, timing cost = 0, wirelen = 0
+Info:   at iteration #2: temp = 0.000000, timing cost = 0, wirelen = 0 
+Info: SA placement time 0.00s
+Info: No Fmax available; no interior timing paths found in design.
+
+Info: Checksum: 0x0628d8b8
+Info: Find global nets...
+Info: Routing globals...
+
+Info: Routing..
+Info: Setting up routing queue.
+Info: Routing 9 arcs.
+Info:            |   (re-)routed arcs  |   delta    | remaining|       time spent     |
+Info:    IterCnt |  w/ripup   wo/ripup |  w/r  wo/r |      arcs| batch(sec) total(sec)|
+Info:          9 |        0          9 |    0     9 |         0|       0.28       0.28|
+Info: Routing complete.
+Info: Router1 time 0.28s
+Info: Checksum: 0xd2c6f51d
+Info: No Fmax available; no interior timing paths found in design.
+
+Info: Program finished normally.
