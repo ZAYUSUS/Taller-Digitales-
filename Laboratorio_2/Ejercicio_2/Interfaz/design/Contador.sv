@@ -1,9 +1,9 @@
-`timescale 1ms / 10ns
+`timescale 1ms / 1ns
 
 module contador (
     input inhibit,
     input clk,
-    output reg [1:0] out
+    output logic [1:0] out
 );
 
     always @(posedge clk) begin
@@ -12,5 +12,4 @@ module contador (
         end else
             out <= 0;
     end
-
 endmodule

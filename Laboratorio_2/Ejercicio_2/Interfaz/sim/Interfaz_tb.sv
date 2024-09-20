@@ -1,4 +1,4 @@
-`timescale 1ms / 10ns
+`timescale 1ms / 1ns
 
 module Interfaz_tb();
 reg KeyP;
@@ -23,9 +23,10 @@ Interfaz I0(
     .uart_tx(uart_tx)
 );
 
-    always begin #0.000037037037 clk = ~clk;end
+    always begin #0.0000185 clk = ~clk;end
 
     initial begin
+        clk=0;
         rst = 0;
         fila=2'b0;
         KeyP=0;

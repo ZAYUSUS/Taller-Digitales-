@@ -1,4 +1,4 @@
-`timescale 1ms / 10ns
+`timescale 1ms / 1ns
 
 module Interfaz(
     input  logic KeyP,
@@ -12,15 +12,23 @@ module Interfaz(
     output uart_tx
 );
 wire inhibit;
-wire uart_tx1;
 wire Data_Available;
 wire [1:0] columna1;
 wire [3:0] Q1;
 reg clk1;
-
+reg [14:0] espera=0;
 localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
 localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
 
+initial clk1=0;
+
+always @(posedge clk)begin //divisor de reloj
+    if(espera>27000)begin
+        clk1 <= ~clk1;
+        espera<=0;
+        end
+    else espera <= espera+1;
+end
 
 
 KBE b0(
@@ -45,11 +53,11 @@ sincronizador s0(// sincronizador
 );
 
 //Codificador
-assign Q=Q1;
+assign Q=~Q1;
 assign columna = columna1;
 
 always @(Q1) begin
-    case (Q)
+    case (Q1)
         4'b0000: code <= 4'h1;
         4'b0001: code <= 4'h2;
         4'b0010: code <= 4'h3;
@@ -76,30 +84,37 @@ reg [24:0] txCounter = 0;// ciclos de reloj
 reg [7:0] dataOut = 0;// byte que se envía
 reg txPinRegister = 1;// valor a adjuntar en uart_tx
 reg [2:0] txBitNumber = 0;// bit enviando
+reg [3:0] txByteCounter = 0;
 
 assign uart_tx = txPinRegister;
 
 // parte a cambiar
-reg [7:0] code_uart;
+localparam MEMORY_LENGTH = 2;
+reg [7:0] code_uart [MEMORY_LENGTH-1:0];
+
+initial begin
+    code_uart[0] = "H";
+end
+
 always @(KeyP) begin
-    case (Q)
-        4'b0000: code_uart <= "1";
-        4'b0001: code_uart <= "2";
-        4'b0010: code_uart <= "3";
-        4'b0011: code_uart <= "A";
-        4'b0100: code_uart <= "4";
-        4'b0101: code_uart <= "5";
-        4'b0110: code_uart <= "6";
-        4'b0111: code_uart <= "B";
-        4'b1000: code_uart <= "7";
-        4'b1001: code_uart <= "8";
-        4'b1010: code_uart <= "9";
-        4'b1011: code_uart <= "C";
-        4'b1100: code_uart <= "*";
-        4'b1101: code_uart <= "0";
-        4'b1110: code_uart <= "#";
-        4'b1111: code_uart <= "D";
-        default: code_uart <= "0";
+    case (Q1)
+        4'b0000: code_uart[1] <= "1";
+        4'b0001: code_uart[1] <= "2";
+        4'b0010: code_uart[1] <= "3";
+        4'b0011: code_uart[1] <= "A";
+        4'b0100: code_uart[1] <= "4";
+        4'b0101: code_uart[1] <= "5";
+        4'b0110: code_uart[1] <= "6";
+        4'b0111: code_uart[1] <= "B";
+        4'b1000: code_uart[1] <= "7";
+        4'b1001: code_uart[1] <= "8";
+        4'b1010: code_uart[1] <= "9";
+        4'b1011: code_uart[1] <= "C";
+        4'b1100: code_uart[1] <= "*";
+        4'b1101: code_uart[1] <= "0";
+        4'b1110: code_uart[1] <= "#";
+        4'b1111: code_uart[1] <= "D";
+        default: code_uart[1] <= "0";
     endcase
 end
 //localparam MEMORY_LENGTH = 2;
@@ -124,7 +139,8 @@ always @(posedge clk)begin
             txPinRegister <= 0;
             if ((txCounter + 1) == DELAY_FRAMES) begin
                 txState <= TX_STATE_WRITE;
-                dataOut <= code_uart;// guardo el caracter
+                $display("COdigo uart=%b",code_uart[txByteCounter]);
+                dataOut <= code_uart[txByteCounter];// guardo el caracter
                 txBitNumber <= 0;
                 txCounter <= 0;
             end else 
@@ -143,10 +159,15 @@ always @(posedge clk)begin
             end else 
                 txCounter <= txCounter + 1;
         end
-            TX_STATE_STOP_BIT: begin
+        TX_STATE_STOP_BIT: begin
             txPinRegister <= 1;
             if ((txCounter + 1) == DELAY_FRAMES) begin
-                txState <= TX_STATE_DEBOUNCE;
+                if (txByteCounter == MEMORY_LENGTH - 1) begin
+                    txState <= TX_STATE_DEBOUNCE;
+                end else begin
+                    txByteCounter <= txByteCounter + 1;
+                    txState <= TX_STATE_START_BIT;
+                end
                 txCounter <= 0;
             end else 
                 txCounter <= txCounter + 1;

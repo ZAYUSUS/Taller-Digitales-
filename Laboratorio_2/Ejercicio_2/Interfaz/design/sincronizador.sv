@@ -1,4 +1,4 @@
-`timescale 1ms / 10ns
+`timescale 1ms / 1ns
 module sincronizador (
   input  D0,//fila[0]
   input  D1,//fila[1]
@@ -13,10 +13,10 @@ always_ff @(posedge clk, posedge rst) begin
     if (rst) begin
       Q = 0;
     end else begin
-      Q[0]=1;
-      Q[1]=1;
-      Q[2]=0;
-      Q[3]=1;
+      Q[0]=D0;
+      Q[1]=D1;
+      Q[2]=D2;
+      Q[3]=D3;
     end
   end
 endmodule

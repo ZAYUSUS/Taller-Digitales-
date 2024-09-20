@@ -472,3 +472,8 @@ FodyWeavers.xsd
 !*.elf
 !*.bmm
 !*.xmp
+*.o
+*.json
+*.vcd
+*.fs
+*.dbgmodule*

@@ -1,4 +1,4 @@
-`timescale 1ms / 10ns
+`timescale 1ms / 1ns
 
 
 module KBE(// Bounce Elimination module
