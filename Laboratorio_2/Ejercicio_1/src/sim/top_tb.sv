@@ -1,4 +1,4 @@
-`timescale 1ms / 1ns
+`timescale 1us / 1ns
 
 module top_tb();
 
@@ -19,6 +19,14 @@ module top_tb();
     // Generador de reloj: frecuencia de 27 MHz (periodo de 37 ns)
     always #0.0000185 clk = ~clk;   // Alterna la señal de reloj cada 18.5 ns para simular una frecuencia de 27 MHz
 
+    task wait_n_us(int delay);
+        #delay;
+    endtask
+
+    task wait_n_ms(int delay);
+        #delay*1000;
+    endtask
+
     // Proceso inicial
     initial begin
         $monitor("Time=%t : pulsador=%b, leds=%b", $time, pulsador, leds);
@@ -28,7 +36,7 @@ module top_tb();
         pulsador = 0;
 
         // Esperamos unos ciclos antes de liberar el reset
-        #10;
+        wait_n_ms(1);
         rst = 1;  // Liberamos el reset
 
         // Simulación de rebotes en el botón

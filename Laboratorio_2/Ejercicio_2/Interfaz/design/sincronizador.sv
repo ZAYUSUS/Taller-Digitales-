@@ -1,11 +1,11 @@
 `timescale 1ms / 1ns
 module sincronizador (
-  input  D0,//fila[0]
-  input  D1,//fila[1]
-  input  D2,//columna[0]
-  input  D3,//columna[1]
-  input  clk, //cada vez que exite KeyP
-  input  rst, 
+  input  logic D0,//fila[0]
+  input  logic D1,//fila[1]
+  input  logic D2,//columna[0]
+  input  logic D3,//columna[1]
+  input  logic clk, //cada vez que exite KeyP
+  input  logic rst, 
   output  logic [3:0]  Q
 );
 

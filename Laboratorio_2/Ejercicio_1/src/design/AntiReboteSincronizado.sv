@@ -1,4 +1,3 @@
-`timescale 1ms / 1ns
 
 module AntiReboteSincronizado(
     input clk,  // Reloj de la FPGA (frecuencia de 27 MHz)
@@ -13,14 +12,14 @@ module AntiReboteSincronizado(
     reg ff1;   // Registro (flip-flop) para sincronizar la señal después de eliminar los rebotes
 
     // Lógica de eliminación de rebotes (antirrebote)
-    always @(posedge clk or negedge rst) begin
+    always_ff(posedge clk or negedge rst) begin
         if (!rst) begin
             // Si el reset está activo (bajo), se reinicia la señal filtrada
             salidaEstable <= 0;  // Inicializa la señal a 0
         end 
     end
 
-    always @(entradaAsincronica) begin
+    always_comb begin
         #2
         if (entradaAsincronica == 1'b1) begin
             salidaEstable <= 1'b1;  // Señal estable se establece en 1, ya que ha sido presionado por 2 ms sin rebotes
@@ -30,7 +29,7 @@ module AntiReboteSincronizado(
     end
 
     // Lógica de sincronización de la señal (sincronización después del antirrebote)
-    always @(posedge clk or negedge rst) begin
+    always_ff(posedge clk or negedge rst) begin
         if (!rst) begin
             // Si reset es bajo (activo), reiniciamos los flip-flops de sincronización
             ff1 <= 1'b0;  // Inicializamos el flip-flop de sincronización

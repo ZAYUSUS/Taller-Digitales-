@@ -1,15 +1,15 @@
-`timescale 1ms / 1ns
+
 
 module Interfaz(
     input  logic KeyP,
     input  logic rst,
     input logic clk,
     input logic [1:0] fila,
-    input uart_rx,
+    input logic uart_rx,
     output  logic [1:0] columna,
     output logic [3:0] Q,
     output logic [3:0] code,
-    output uart_tx
+    output logic uart_tx
 );
 wire inhibit;
 wire Data_Available;
@@ -32,6 +32,7 @@ end
 
 
 KBE b0(
+        .clk(clk),
         .KeyP(KeyP),
         .Data_Available(Data_Available),
         .inhibit(inhibit)
