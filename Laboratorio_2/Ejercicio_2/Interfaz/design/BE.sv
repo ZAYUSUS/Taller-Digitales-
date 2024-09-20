@@ -1,4 +1,4 @@
-`timescale 1ms / 100us
+`timescale 1ms / 10ns
 
 
 module KBE(// Bounce Elimination module
@@ -7,13 +7,14 @@ module KBE(// Bounce Elimination module
   output logic inhibit
 );
 always @(KeyP)begin
+    inhibit=1;
     #2 // Espera 2 ms
     if (KeyP) begin // si la tecla sigue presionada
-      Data_Available = 1;
-      inhibit =1;
-    end else begin 
-      Data_Available =0;
+      Data_Available = 0;
       inhibit =0;
+    end else begin 
+      Data_Available =1;
+      inhibit =1;
     end
 end
 

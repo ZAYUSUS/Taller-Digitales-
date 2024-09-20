@@ -1,18 +1,27 @@
-`timescale 1ms / 100us
+`timescale 1ms / 10ns
 
 module Interfaz(
     input  logic KeyP,
-    input  logic clk,
     input  logic rst,
-    input  logic [1:0] columna,
-    output logic [1:0] fila,
+    input logic clk,
+    input logic [1:0] fila,
+    input uart_rx,
+    output  logic [1:0] columna,
     output logic [3:0] Q,
-    output logic [3:0] code
+    output logic [3:0] code,
+    output uart_tx
 );
 wire inhibit;
+wire uart_tx1;
 wire Data_Available;
-wire [1:0] fila1;
+wire [1:0] columna1;
 wire [3:0] Q1;
+reg clk1;
+
+localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
+localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
+
+
 
 KBE b0(
         .KeyP(KeyP),
@@ -22,22 +31,24 @@ KBE b0(
 
 contador c0(//2bit contador
     .inhibit(inhibit),
-    .clk(clk),
-    .out(fila1)
+    .clk(clk1),
+    .out(columna1)
 );
 sincronizador s0(// sincronizador
-    .D0(fila1[0]),
-    .D1(fila1[1]),
-    .D2(columna[0]),
-    .D3(columna[1]),
-    .clk(~Data_Available),
+    .D0(fila[0]),
+    .D1(fila[1]),
+    .D2(columna1[0]),
+    .D3(columna1[1]),
+    .clk(Data_Available),
     .rst(rst),
     .Q(Q1)
 );
+
 //Codificador
-always @(Q1 or fila1) begin
-    Q <= Q1;
-    fila <= fila1;
+assign Q=Q1;
+assign columna = columna1;
+
+always @(Q1) begin
     case (Q)
         4'b0000: code <= 4'h1;
         4'b0001: code <= 4'h2;
@@ -59,5 +70,95 @@ always @(Q1 or fila1) begin
     endcase
 end
 
+//uart 
+reg [3:0] txState = 0;// estado actual
+reg [24:0] txCounter = 0;// ciclos de reloj
+reg [7:0] dataOut = 0;// byte que se envía
+reg txPinRegister = 1;// valor a adjuntar en uart_tx
+reg [2:0] txBitNumber = 0;// bit enviando
+
+assign uart_tx = txPinRegister;
+
+// parte a cambiar
+reg [7:0] code_uart;
+always @(KeyP) begin
+    case (Q)
+        4'b0000: code_uart <= "1";
+        4'b0001: code_uart <= "2";
+        4'b0010: code_uart <= "3";
+        4'b0011: code_uart <= "A";
+        4'b0100: code_uart <= "4";
+        4'b0101: code_uart <= "5";
+        4'b0110: code_uart <= "6";
+        4'b0111: code_uart <= "B";
+        4'b1000: code_uart <= "7";
+        4'b1001: code_uart <= "8";
+        4'b1010: code_uart <= "9";
+        4'b1011: code_uart <= "C";
+        4'b1100: code_uart <= "*";
+        4'b1101: code_uart <= "0";
+        4'b1110: code_uart <= "#";
+        4'b1111: code_uart <= "D";
+        default: code_uart <= "0";
+    endcase
+end
+//localparam MEMORY_LENGTH = 2;
+
+localparam TX_STATE_IDLE = 0;
+localparam TX_STATE_START_BIT = 1;
+localparam TX_STATE_WRITE = 2;
+localparam TX_STATE_STOP_BIT = 3;
+localparam TX_STATE_DEBOUNCE = 4;
+always @(posedge clk)begin
+    case (txState)
+        TX_STATE_IDLE: begin
+            if (KeyP == 0) begin //cuando se presiona una tecla
+                txState <= TX_STATE_START_BIT;
+                txCounter <= 0;
+            end
+            else begin
+                txPinRegister <= 1;
+            end
+        end 
+        TX_STATE_START_BIT: begin
+            txPinRegister <= 0;
+            if ((txCounter + 1) == DELAY_FRAMES) begin
+                txState <= TX_STATE_WRITE;
+                dataOut <= code_uart;// guardo el caracter
+                txBitNumber <= 0;
+                txCounter <= 0;
+            end else 
+                txCounter <= txCounter + 1;
+        end
+        TX_STATE_WRITE: begin
+            txPinRegister <= dataOut[txBitNumber];
+            if ((txCounter + 1) == DELAY_FRAMES) begin
+                if (txBitNumber == 3'b111) begin // cuenta hasta 8bits
+                    txState <= TX_STATE_STOP_BIT;
+                end else begin
+                    txState <= TX_STATE_WRITE;
+                    txBitNumber <= txBitNumber + 1;
+                end
+                txCounter <= 0;
+            end else 
+                txCounter <= txCounter + 1;
+        end
+            TX_STATE_STOP_BIT: begin
+            txPinRegister <= 1;
+            if ((txCounter + 1) == DELAY_FRAMES) begin
+                txState <= TX_STATE_DEBOUNCE;
+                txCounter <= 0;
+            end else 
+                txCounter <= txCounter + 1;
+        end
+            TX_STATE_DEBOUNCE: begin
+            if (txCounter == 23'b111111111111111111) begin
+                if (KeyP == 1) 
+                    txState <= TX_STATE_IDLE;
+            end else
+                txCounter <= txCounter + 1;
+        end
+    endcase
+end
 
 endmodule

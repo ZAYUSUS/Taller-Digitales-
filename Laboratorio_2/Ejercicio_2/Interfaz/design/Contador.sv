@@ -1,16 +1,16 @@
-`timescale 1ms / 100us
+`timescale 1ms / 10ns
 
 module contador (
     input inhibit,
     input clk,
-    output logic [1:0] out
+    output reg [1:0] out
 );
 
     always @(posedge clk) begin
-        if (inhibit) begin //si se presiona una tecla
-            out <= 0;
+        if (!inhibit) begin //si se presiona una tecla
+            out <= out+1'b1;
         end else
-            out <= out+1;
+            out <= 0;
     end
 
 endmodule
