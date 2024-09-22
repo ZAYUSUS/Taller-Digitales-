@@ -11,16 +11,18 @@ module Interfaz(
     output logic [3:0] code,
     output logic uart_tx
 );
-wire inhibit;
-wire Data_Available;
-wire [1:0] columna1;
-wire [3:0] Q1;
-reg clk1;
+
+reg  inhibit;
+reg  Data_Available;
+reg  clk1 = 0;
 reg [14:0] espera=0;
 localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
 localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
 
-initial clk1=0;
+wire Data_aux;
+wire inhibit_aux;
+wire [1:0] columna_aux;
+wire [3:0] Q1;
 
 always @(posedge clk)begin //divisor de reloj
     if(espera>27000)begin
@@ -30,32 +32,33 @@ always @(posedge clk)begin //divisor de reloj
     else espera <= espera+1;
 end
 
+assign Data_Available = Data_aux;
+assign inhibit = inhibit_aux;
+assign  columna = columna_aux;
 
 KBE b0(
         .clk(clk),
         .KeyP(KeyP),
-        .Data_Available(Data_Available),
-        .inhibit(inhibit)
+        .Data_Available(Data_aux),
+        .inhibit(inhibit_aux)
 );
 
 contador c0(//2bit contador
     .inhibit(inhibit),
     .clk(clk1),
-    .out(columna1)
+    .out(columna_aux)
 );
 sincronizador s0(// sincronizador
-    .D0(fila[0]),
-    .D1(fila[1]),
-    .D2(columna1[0]),
-    .D3(columna1[1]),
+    .D0(columna[0]),
+    .D1(columna[1]),
+    .D2(fila[0]),
+    .D3(fila[1]),
     .clk(Data_Available),
     .rst(rst),
     .Q(Q1)
 );
-
+assign Q= Q1;
 //Codificador
-assign Q=~Q1;
-assign columna = columna1;
 
 always @(Q1) begin
     case (Q1)
@@ -94,7 +97,7 @@ localparam MEMORY_LENGTH = 2;
 reg [7:0] code_uart [MEMORY_LENGTH-1:0];
 
 initial begin
-    code_uart[0] = "H";
+    code_uart[0] = "2";
 end
 
 always @(KeyP) begin
@@ -140,7 +143,6 @@ always @(posedge clk)begin
             txPinRegister <= 0;
             if ((txCounter + 1) == DELAY_FRAMES) begin
                 txState <= TX_STATE_WRITE;
-                $display("COdigo uart=%b",code_uart[txByteCounter]);
                 dataOut <= code_uart[txByteCounter];// guardo el caracter
                 txBitNumber <= 0;
                 txCounter <= 0;

@@ -7,23 +7,30 @@ module KBE(// Bounce Elimination module
   output logic Data_Available,
   output logic inhibit
 );
-reg c=0;
+bit c=0;
+bit veri=0;
 reg [15:0] espera=0;
-always @(posedge clk)begin //divisor de reloj
-  if(KeyP)begin
+
+always @(posedge KeyP)begin
+  if (~veri) begin
     c<=1;
+    veri<=1;
   end
+end
+
+always @(posedge clk)begin //divisor de reloj
   if(c)begin
-      if(espera>27000)begin
-        espera<=0;
+      if(espera>54000)begin//espera 2 ms
         if (KeyP) begin // si la tecla sigue presionada
         Data_Available <= 0;
-        inhibit <=0;
+        inhibit =1;
         end else begin 
           Data_Available <=1;
-          inhibit <=1;
+          inhibit =0;
         end
+        espera<=0;
         c<=0;
+        veri<=0;
         end
     else espera <= espera+1;
   end

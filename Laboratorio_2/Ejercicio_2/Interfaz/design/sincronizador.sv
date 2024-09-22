@@ -8,15 +8,14 @@ module sincronizador (
   input  logic rst, 
   output  logic [3:0]  Q
 );
+reg [3:0] Q1;
 
-always_ff @(posedge clk, posedge rst) begin
-    if (rst) begin
-      Q = 0;
+assign Q1 = {D0,D1,D2,D3};
+always @(posedge clk) begin
+    if (!rst) begin
+        Q = Q1;
     end else begin
-      Q[0]=D0;
-      Q[1]=D1;
-      Q[2]=D2;
-      Q[3]=D3;
+        Q = 4'b0000;
     end
   end
 endmodule
