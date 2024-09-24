@@ -10,8 +10,6 @@ module sincronizador (
 );
 reg [3:0] Q1;
 
-assign Q1 = clk ? {D0,D1,D2,D3} : 4'b0000;
-always @(posedge clk) begin
-  Q <= rst ? 4'b0000 : Q1;
-end
+assign Q = clk ? (rst ? 4'b0000 : {D0,D1,D2,D3} ) : 4'b0000;
+
 endmodule
