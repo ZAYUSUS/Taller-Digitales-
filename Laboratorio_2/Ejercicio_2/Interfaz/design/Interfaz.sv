@@ -14,10 +14,9 @@ module Interfaz(
 
 reg  inhibit;
 reg  Data_Available;
-reg  clk1 = 0;
+reg  clk1 ;
 reg [14:0] espera=0;
-localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
-localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
+
 
 wire Data_aux;
 wire inhibit_aux;
@@ -25,17 +24,13 @@ wire [1:0] columna_aux;
 wire [3:0] Q1;
 
 always @(posedge clk)begin //divisor de reloj
-    if(espera>27000)begin
-        clk1 <= ~clk1;
-        espera<=0;
-        end
-    else espera <= espera+1;
+    espera <= (espera>=27000) ? 0 : espera+1;
 end
-
+assign clk1 = (espera==27000) ? 1 : 0;
 assign Data_Available = Data_aux;
 assign inhibit = inhibit_aux;
 assign  columna = columna_aux;
-
+assign Q = Q1 ;
 KBE b0(
         .clk(clk),
         .KeyP(KeyP),
@@ -49,17 +44,16 @@ contador c0(//2bit contador
     .out(columna_aux)
 );
 sincronizador s0(// sincronizador
-    .D0(columna[0]),
-    .D1(columna[1]),
-    .D2(fila[0]),
-    .D3(fila[1]),
+    .D0(fila[1]),
+    .D1(fila[0]),
+    .D2(columna[0]),
+    .D3(columna[1]),
     .clk(Data_Available),
     .rst(rst),
     .Q(Q1)
 );
-assign Q= Q1;
-//Codificador
 
+//Codificador
 always @(Q1) begin
     case (Q1)
         4'b0000: code <= 4'h1;
@@ -83,6 +77,8 @@ always @(Q1) begin
 end
 
 //uart 
+localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
+localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
 reg [3:0] txState = 0;// estado actual
 reg [24:0] txCounter = 0;// ciclos de reloj
 reg [7:0] dataOut = 0;// byte que se envía
@@ -186,3 +182,4 @@ always @(posedge clk)begin
 end
 
 endmodule
+

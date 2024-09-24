@@ -7,34 +7,30 @@ module KBE(// Bounce Elimination module
   output logic Data_Available,
   output logic inhibit
 );
-bit c=0;
-bit veri=0;
-reg [15:0] espera=0;
 
-always @(posedge KeyP)begin
-  if (~veri) begin
-    c<=1;
-    veri<=1;
-  end
-end
-
-always @(posedge clk)begin //divisor de reloj
-  if(c)begin
-      if(espera>54000)begin//espera 2 ms
-        if (KeyP) begin // si la tecla sigue presionada
-        Data_Available <= 0;
-        inhibit =1;
-        end else begin 
-          Data_Available <=1;
-          inhibit =0;
-        end
-        espera<=0;
-        c<=0;
-        veri<=0;
-        end
-    else espera <= espera+1;
-  end
-end
-
-
+wire slow_clk_en;
+wire Q1,Q2,Q2_bar,Q0;
+clock_enable u1(clk,slow_clk_en);
+my_dff_en d0(clk,slow_clk_en,KeyP,Q0);
+my_dff_en d1(clk,slow_clk_en,Q0,Q1);
+my_dff_en d2(clk,slow_clk_en,Q1,Q2);
+assign Q2_bar = ~Q2;
+assign Data_Available = ~(Q1 & Q2_bar);
+assign inhibit = Q1 & Q2_bar;
+endmodule 
+// Slow clock enable for debouncing button 
+module clock_enable(input Clk_27M,output slow_clk_en);
+    reg [15:0] counter=0;
+    always @(posedge Clk_27M)
+    begin
+      counter <= (counter>=54000) ? 0: counter+1;
+    end
+    assign slow_clk_en = (counter == 54000) ? 1'b1:1'b0;
+endmodule
+// D-flip-flop with clock enable signal for debouncing module 
+module my_dff_en(input DFF_CLOCK, clock_enable,D, output reg Q=0);
+    always @ (posedge DFF_CLOCK) begin
+  if(clock_enable==1) 
+        Q <= D;
+    end
 endmodule 

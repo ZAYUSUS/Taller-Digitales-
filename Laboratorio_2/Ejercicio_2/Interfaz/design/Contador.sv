@@ -5,11 +5,10 @@ module contador (
     input clk,
     output logic [1:0] out
 );
+reg [1:0] columna_generada=0;
 
-    always @(posedge clk) begin
-        if (!inhibit) begin //si se presiona una tecla
-            out <= out+1'b1;
-        end else
-            out <= 0;
-    end
+assign out = inhibit ? columna_generada : 2'b00;
+always @(posedge clk) begin
+        columna_generada<= inhibit ? columna_generada+0 : columna_generada+1;
+end
 endmodule
