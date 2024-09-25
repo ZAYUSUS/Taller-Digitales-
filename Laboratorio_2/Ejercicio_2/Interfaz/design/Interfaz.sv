@@ -30,7 +30,7 @@ assign clk1 = (espera==27000) ? 1 : 0;
 assign Data_Available = Data_aux;
 assign inhibit = inhibit_aux;
 assign  columna = columna_aux;
-assign Q = Q1 ;
+assign Q = ~Q1 ;
 KBE b0(
         .clk(clk),
         .KeyP(KeyP),

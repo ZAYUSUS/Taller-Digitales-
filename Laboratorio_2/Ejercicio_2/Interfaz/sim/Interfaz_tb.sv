@@ -1,4 +1,4 @@
-`timescale 1ms / 1ns
+`timescale 1ns / 1ps
 
 module Interfaz_tb();
 reg KeyP;
@@ -12,6 +12,8 @@ wire [3:0] code;
 wire [1:0] columna;
 reg [3:0] Q1;
 
+reg [31:0] ms = 1000000;
+
 Interfaz I0(
     .KeyP(KeyP),
     .rst(rst),
@@ -23,24 +25,42 @@ Interfaz I0(
     .code(code),
     .uart_tx(uart_tx)
 );
+task bounce();
+    #500 KeyP=1;
+    #1000 KeyP=0;
+    #200 KeyP=1;
+    #2000 KeyP=0;
+endtask //automatic
+task wait_n_ms(int delay);
+        #(delay*ms);
+endtask
+task random_delay();
+    #(1000000*$urandom_range(10));
+endtask
+task prueba1();
+    bounce();
+    bounce();
+    KeyP=1;
+    wait_n_ms(4);
+    KeyP=0;
+    fila = $random;
+    if(Q1=={fila[0],fila[1],columna[0],columna[1]})begin
+        $display("PASS!! Q=%b Fila=%b Columna=%b",Q1,fila,columna);
+    end else
+        $display("ERROR!! Q=%b Fila=%b Columna=%b",Q1,fila,columna);
+    
+endtask
 
-    always begin #0.0000185 clk = ~clk;end
-    assign Q1 = ~Q;
-    initial begin
+always begin #37 clk = ~clk;end // cada 37 ns o 27MHz
+assign Q1 = ~Q;
+initial begin
         clk=0;
         rst = 0;
         fila=2'b0;
         KeyP=0;
-        $monitor("[%0t] Salida Q=%b Codigo=%h Presionada=%h Fila=%b Columna=%b uart_Tx=%b",$time,Q1,code,KeyP,fila,columna,uart_tx);
-        for (int i =0 ;i<10 ;i++ ) begin
-            #3 KeyP=1;
-            fila =$random;
-            #6 KeyP=0;
-        end
-        #20 KeyP=1;
-        fila =$random;
-        #10 KeyP=0;
-        #10 $finish;
+        prueba1();
+        
+        #10000 $finish;
     end
     initial begin
         $dumpfile("Interfaz_tb.vcd");
