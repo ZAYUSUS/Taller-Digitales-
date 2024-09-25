@@ -16,7 +16,7 @@ my_dff_en d1(clk,slow_clk_en,Q0,Q1);
 my_dff_en d2(clk,slow_clk_en,Q1,Q2);
 assign Q2_bar = ~Q2;
 assign Data_Available = ~(Q1 & Q2_bar);
-assign inhibit = Q1 & Q2_bar;
+assign inhibit = Q2_bar & Q1;
 endmodule 
 // Slow clock enable for debouncing button 
 module clock_enable(input Clk_27M,output slow_clk_en);

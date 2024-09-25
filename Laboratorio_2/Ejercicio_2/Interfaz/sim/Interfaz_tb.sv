@@ -37,6 +37,9 @@ Interfaz I0(
             fila =$random;
             #6 KeyP=0;
         end
+        #20 KeyP=1;
+        fila =$random;
+        #10 KeyP=0;
         #10 $finish;
     end
     initial begin

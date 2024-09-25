@@ -127,7 +127,7 @@ localparam TX_STATE_DEBOUNCE = 4;
 always @(posedge clk)begin
     case (txState)
         TX_STATE_IDLE: begin
-            if (KeyP == 0) begin //cuando se presiona una tecla
+            if (KeyP == 1) begin //cuando se presiona una tecla
                 txState <= TX_STATE_START_BIT;
                 txCounter <= 0;
             end
@@ -173,7 +173,7 @@ always @(posedge clk)begin
         end
             TX_STATE_DEBOUNCE: begin
             if (txCounter == 23'b111111111111111111) begin
-                if (KeyP == 1) 
+                if (KeyP == 0) 
                     txState <= TX_STATE_IDLE;
             end else
                 txCounter <= txCounter + 1;
