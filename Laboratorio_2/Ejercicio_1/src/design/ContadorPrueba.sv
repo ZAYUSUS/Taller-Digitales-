@@ -1,16 +1,16 @@
-`timescale 1ms / 1ns
+`timescale 1ns / 1ps
 
 module ContadorPruebas(
-    input  clk,       // Señal de reloj
-    input  rst,       // Señal de reset activo en bajo
-    input  EN,        // Señal habilitadora activa en alto
-    output reg [5:0] contador // Contador de 8 bits
+    input logic clk,       // Señal de reloj
+    input logic rst,       // Señal de reset activo en bajo
+    input logic EN,        // Señal habilitadora activa en alto
+    output reg [7:0] contador // Contador de 8 bits
 );
     reg anteriorEN; // Registro para almacenar el valor anterior de EN
 
     // Proceso síncrono
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
             // Si rst es bajo (activo), reiniciamos el contador
             contador <= 8'b0;  // Contador a 0
             anteriorEN <= 1'b0;   // Reiniciamos el valor previo de EN
