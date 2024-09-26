@@ -1,14 +1,14 @@
-`timescale 1ms / 1ns
+`timescale 1ns / 1ps
 
 module top(
     input clk,       // Señal de reloj
     input rst,       // Señal de reset activo en bajo
     input pulsador,    // Señal de entrada del pulsador (asincrónica)
-    output [5:0] leds // Salida del contador de 8 bits
+    output [7:0] leds // Salida del contador de 8 bits
 );
 
     wire salidaEstable;  // Señal estable sin rebotes del módulo antirrebote
-    wire [5:0] contador; // Salida del contador original
+    wire [7:0] contador; // Salida del contador original
     
     // Instancia del módulo AntiReboteSincronizado
     AntiReboteSincronizado u_AntiReboteSincronizado(
