@@ -9,7 +9,6 @@ reg [1:0] c=0;
 always @(posedge clk) begin
     if(inhibit) begin 
         out <= c;
-        c<=c+0;
     end//si se escanea un match se apaga el contador
     else begin
         out <=0;

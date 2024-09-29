@@ -48,7 +48,7 @@ sincronizador s0(// sincronizador
     .D1(fila[0]),
     .D2(columna[0]),
     .D3(columna[1]),
-    .clk(Data_Available),
+    .data_Available(Data_Available),
     .rst(rst),
     .Q(Q1)
 );

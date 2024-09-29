@@ -13,7 +13,7 @@ module top(
     // Instancia del módulo AntiReboteSincronizado
     AntiReboteSincronizado u_AntiReboteSincronizado(
         .clk(clk),
-        .rst(rst),
+        .rst(~rst),
         .entradaAsincronica(pulsador),
         .salidaSincronizada(salidaEstable)  // Salida estable sin rebotes
     );
@@ -21,7 +21,7 @@ module top(
     // Instancia del módulo ContadorPruebas
     ContadorPruebas u_ContadorPruebas(
         .clk(clk),
-        .rst(rst),
+        .rst(~rst),
         .EN(salidaEstable),       // Habilitamos el contador solo cuando la señal de antirrebote está estable
         .contador(contador)   // Salida del contador
     );
