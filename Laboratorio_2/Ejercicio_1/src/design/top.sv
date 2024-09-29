@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 
 module top(
-    input clk,       // Señal de reloj
-    input rst,       // Señal de reset activo en bajo
-    input pulsador,    // Señal de entrada del pulsador (asincrónica)
+    input logic clk,       // Señal de reloj
+    input logic rst,       // Señal de reset activo en bajo
+    input logic pulsador,    // Señal de entrada del pulsador (asincrónica)
     output [5:0] leds // Salida del contador de 8 bits
 );
 
