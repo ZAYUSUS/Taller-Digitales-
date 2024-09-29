@@ -3,12 +3,17 @@
 module contador (
     input inhibit,
     input clk,
-    output logic [1:0] out
+    output reg [1:0] out
 );
-reg [1:0] columna_generada=0;
-
-assign out = inhibit ? columna_generada : 2'b00;
+reg [1:0] c=0;
 always @(posedge clk) begin
-        columna_generada<= inhibit ? columna_generada+0 : columna_generada+1;
+    if(inhibit) begin 
+        out <= c;
+        c<=c+0;
+    end//si se escanea un match se apaga el contador
+    else begin
+        out <=0;
+        c <= c+1;// se el escaneo encuentra una tecla
+    end
 end
 endmodule

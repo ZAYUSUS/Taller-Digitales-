@@ -6,7 +6,7 @@ module sincronizador (
   input  logic D3,//columna[1]
   input  logic clk, //cada vez que exite KeyP
   input  logic rst, 
-  output  logic [3:0]  Q
+  output  reg [3:0]  Q
 );
 reg [3:0] Q1;
 

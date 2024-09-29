@@ -24,9 +24,9 @@ wire [1:0] columna_aux;
 wire [3:0] Q1;
 
 always @(posedge clk)begin //divisor de reloj
-    espera <= (espera>=27000) ? 0 : espera+1;
+    espera <= (espera>=13500) ? 0 : espera+1;
 end
-assign clk1 = (espera==27000) ? 1 : 0;
+assign clk1 = (espera==13500) ? 1 : 0;//cambia cada 1ms
 assign Data_Available = Data_aux;
 assign inhibit = inhibit_aux;
 assign  columna = columna_aux;
@@ -77,6 +77,9 @@ always @(Q1) begin
 end
 
 //uart 
+
+
+
 localparam DELAY_FRAMES = 2812;// 27,000,000 (27Mhz) / 9600 Baud rate
 localparam HALF_DELAY_WAIT = (DELAY_FRAMES / 2);
 reg [3:0] txState = 0;// estado actual

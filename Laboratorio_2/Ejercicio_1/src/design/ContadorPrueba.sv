@@ -4,7 +4,7 @@ module ContadorPruebas(
     input logic clk,       // Señal de reloj
     input logic rst,       // Señal de reset activo en bajo
     input logic EN,        // Señal habilitadora activa en alto
-    output reg [7:0] contador // Contador de 8 bits
+    output reg [5:0] contador // Contador de 8 bits
 );
     reg anteriorEN; // Registro para almacenar el valor anterior de EN
 
