@@ -19,13 +19,17 @@ module top_tb;
     // Generador de reloj: frecuencia de 27 MHz (periodo de ~37 ns)
     always #18.5 clk = ~clk;   // Alterna la señal de reloj cada 18.5 ns para simular una frecuencia de 27 MHz
     task rebote();
-        #200_000 pulsador = 1;  // Botón presionado (simulación de pulsación)
-        #100_000 pulsador = 0;  // Rebote: cambia rápidamente a 0
-        #200_000 pulsador = 1;  // Rebote: cambia rápidamente a 1
-        #200_000 pulsador = 0;  // Rebote: vuelve a 0
-        #100_000 pulsador = 1;  // Rebote: vuelve a 1
-        #300_000 pulsador = 0;  // Rebote: vuelve a 0
+        // Simulación de pulsación
+        #200_000 pulsador = 1;  // Botón empieza a presionarse
+        #100_000 pulsador = 0;  // Rebote: cambia a 0
+        #200_000 pulsador = 1;  // Rebote: cambia a 1
+        #200_000 pulsador = 0;  // Rebote: cambia a 0
+        #100_000 pulsador = 1;  // Rebote: cambia a 1
+        #300_000 pulsador = 0;  // Rebote: cambia a 0
         #200_000 pulsador = 1;  // Finalmente permanece en 1
+        // Ahora esperamos 2 ms en alto para que la señal sea considerada estable
+        #2_000_000;
+
     endtask
     // Proceso inicial
     initial begin
@@ -39,11 +43,9 @@ module top_tb;
         rst = 0;  // Liberamos el reset
         for(int i=0;i<5;i++)begin
             rebote();
-            #2_000_000;
         // Soltamos el botón (cambia a 0)
             pulsador = 0;
             #500_000;
-            rebote();
         end
 
         // Finalizamos la simulación después de un tiempo adicional
