@@ -8,8 +8,7 @@ module sincronizador (
   input  logic rst, 
   output  reg [3:0]  Q
 );
-reg [3:0] Q1;
 
-assign Q = data_Available ? {D0,D1,D2,D3} : 4'b0000;
+assign Q = data_Available ?  4'b0000 : {D0,D1,D2,D3};
 
 endmodule

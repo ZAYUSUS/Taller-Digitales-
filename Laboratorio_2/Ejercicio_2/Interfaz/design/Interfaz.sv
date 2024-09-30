@@ -15,7 +15,7 @@ module Interfaz(
 reg  inhibit;
 reg  Data_Available;
 reg  clk1 ;
-reg [14:0] espera=0;
+reg [16:0] espera=0;
 
 
 wire Data_aux;
@@ -24,9 +24,9 @@ wire [1:0] columna_aux;
 wire [3:0] Q1;
 
 always @(posedge clk)begin //divisor de reloj
-    espera <= (espera>=13500) ? 0 : espera+1;
+    espera <= (espera>=67500) ? 0 : espera+1;
 end
-assign clk1 = (espera==13500) ? 1 : 0;//cambia cada 1ms
+assign clk1 = (espera==67500) ? 1 : 0;//cambia cada 1ms
 assign Data_Available = Data_aux;
 assign inhibit = inhibit_aux;
 assign  columna = columna_aux;

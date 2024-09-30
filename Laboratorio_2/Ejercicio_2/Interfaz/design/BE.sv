@@ -15,7 +15,7 @@ my_dff_en d0(clk,slow_clk_en,KeyP,Q0);
 my_dff_en d1(clk,slow_clk_en,Q0,Q1);
 my_dff_en d2(clk,slow_clk_en,Q1,Q2);
 assign Q2_bar = ~Q2;
-assign Data_Available = ~(Q1 & Q2_bar);
+assign Data_Available = ~(Q1 & Q2_bar);// se hace 0 una vez se verifique la tecla
 assign inhibit = Q2_bar & Q1;//se hace 1 cuando pasan 2ms
 endmodule 
 // Slow clock enable for debouncing button 
