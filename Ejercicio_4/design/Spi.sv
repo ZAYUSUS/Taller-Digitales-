@@ -1,7 +1,0 @@
-
-module Spi (
-    ports
-);
-
-
-endmodule
