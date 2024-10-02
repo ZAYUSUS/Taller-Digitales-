@@ -3,17 +3,32 @@
 module Spi (
     input clk, // 27M
 	input resetn,
-
 	output ser_tx,
 	input ser_rx,
-
 	output lcd_resetn,
 	output lcd_clk,
 	output lcd_cs,
 	output lcd_rs,
-	output lcd_data
+	output lcd_data,
+	output [3:0] leds
 );
-
+wire [7:0] dataIn;
+reg conf;
+Uart u0(
+	.clk(clk),
+	.rst_n(resetn),
+	.uart_rx(ser_rx),
+	.uart_tx(ser_tx),
+	.data(dataIn)
+);
+always @(dataIn) begin
+	case (dataIn)
+		8'b00110000:conf=0;
+		8'b00110001:conf=1;
+		default: conf=0;
+	endcase//obtiene el valor del codigo 0 es conf 1 y 1 es conf 2
+end
+assign leds = dataIn[7:4];
 localparam MAX_CMDS = 69;//cantidad maxima de comandos
 // comandos -------------------
 wire [8:0] init_cmd[MAX_CMDS:0];
@@ -141,7 +156,7 @@ assign lcd_data   = spi_data[7]; // MSB
 /*
 wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 :
 					(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F;*/
-wire [15:0] pixel = (color_change) ? 16'hF800 : 16'h001F;
+wire [15:0] pixel = (conf) ? ((color_change) ?  16'h001F: 16'h07E0) : ((color_change) ? 16'hF800 : 16'h001F);
 
 always@(posedge clk or negedge resetn) begin
 	if (~resetn) begin
@@ -154,19 +169,18 @@ always@(posedge clk or negedge resetn) begin
 		lcd_reset_r <= 0;
 		spi_data <= 8'hFF;
 		bit_loop <= 0;
-		pixel_separator<=0;
-		color_change<=0;
+
 		pixel_cnt <= 0;
+		pixel_separator<=0;
 		pixel_row<=0;
+		conf<=0;
 	end else begin
-
 		case (init_state)
-
 			INIT_RESET : begin
 				if (clk_cnt == CNT_100MS) begin
 					clk_cnt <= 0;
-					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
+					init_state <= INIT_PREPARE;
 				end else begin
 					clk_cnt <= clk_cnt + 1;
 				end
@@ -276,9 +290,7 @@ always@(posedge clk or negedge resetn) begin
 					end
 				end
 			end
-
 		endcase
-
 	end
 end
 

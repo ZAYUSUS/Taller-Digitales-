@@ -1,20 +1,20 @@
 IO_LOC  "lcd_data" 77;
-IO_PORT "lcd_data" DRIVE=8 PULL_MODE=UP;
+IO_PORT "lcd_data" DRIVE=8 IO_TYPE=LVCMOS18 PULL_MODE=UP;
 
 IO_LOC  "lcd_rs" 49;
-IO_PORT "lcd_rs" DRIVE=8 PULL_MODE=UP;
+IO_PORT "lcd_rs" DRIVE=8 IO_TYPE=LVCMOS18 PULL_MODE=UP;
 
 IO_LOC  "lcd_cs" 48;
-IO_PORT "lcd_cs" DRIVE=8 PULL_MODE=UP;
+IO_PORT "lcd_cs" DRIVE=8 IO_TYPE=LVCMOS18 PULL_MODE=UP;
 
 IO_LOC  "lcd_clk" 76;
-IO_PORT "lcd_clk" DRIVE=8 PULL_MODE=UP;
+IO_PORT "lcd_clk" DRIVE=8 IO_TYPE=LVCMOS18 PULL_MODE=UP;
 
 IO_LOC  "lcd_resetn" 47;
 IO_PORT "lcd_resetn" DRIVE=8 PULL_MODE=UP;
 
 IO_LOC  "ser_tx" 17;
-IO_PORT "ser_tx" DRIVE=8 PULL_MODE=UP;
+IO_PORT "ser_tx" PULL_MODE=UP;
 
 IO_LOC  "clk" 52;
 IO_PORT "clk" PULL_MODE=UP;
@@ -23,4 +23,11 @@ IO_LOC  "ser_rx" 18;
 IO_PORT "ser_rx" PULL_MODE=UP;
 
 IO_LOC  "resetn" 4;
-IO_PORT "resetn" PULL_MODE=UP;
+
+IO_LOC  "leds[0]" 30;
+
+IO_LOC  "leds[1]" 33;
+
+IO_LOC  "leds[2]" 34;
+
+IO_LOC  "leds[3]" 40;
