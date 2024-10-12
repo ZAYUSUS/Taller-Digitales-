@@ -25,7 +25,7 @@ always @(dataIn) begin
 	case (dataIn)
 		8'b00110000:conf=0;
 		8'b00110001:conf=1;
-		default: conf=1;
+		default: conf=0;
 	endcase//obtiene el valor del codigo 0 es conf 1 y 1 es conf 2
 end
 assign leds = dataIn[7:4];
