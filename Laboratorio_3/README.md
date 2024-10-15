@@ -12,3 +12,7 @@
 
 ### Descripción general
 En esta carpeta se encuentra todo lo relacionado con el laboratorio 3.
+
+En este caso se estará utilizando el toolchain F4PGA.
+
+
