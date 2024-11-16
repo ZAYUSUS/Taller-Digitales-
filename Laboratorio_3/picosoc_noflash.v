@@ -26,9 +26,9 @@ module picosoc_noflash (
     output  UART_TXD_IN,
     input   UART_RXD_OUT
 );
-	parameter integer MEM_WORDS = 512;
-	parameter [31:0] STACKADDR = (4*MEM_WORDS);       // end of memory
-	parameter [31:0] PROGADDR_RESET = 32'h 0010_0000; // 1 MB into flash
+	parameter integer MEM_WORDS = 129600;
+	parameter [31:0] STACKADDR = 32'h80000;       // end of memory
+	parameter [31:0] PROGADDR_RESET = 32'h 0000_0000; // 1 MB into flash
 
 	wire mem_valid;
 	wire mem_instr;
@@ -44,34 +44,24 @@ module picosoc_noflash (
 	reg ram_ready;
 	wire [31:0] ram_rdata;
 
-	assign iomem_valid = mem_valid && (mem_addr[31:24] > 8'h 01);
+	assign iomem_valid = mem_valid && mem_addr > 32'h800 && mem_addr < 32'h40000;
 	assign iomem_wstrb = mem_wstrb;
 	assign iomem_addr = mem_addr;
 	assign iomem_wdata = mem_wdata;
 
-	wire        simpleuart_reg_div_sel = mem_valid && (mem_addr == 32'h 0200_0034);
-	wire [31:0] simpleuart_reg_div_do;
-
-	wire        simpleuart_reg_dat_sel = mem_valid && (mem_addr == 32'h 0200_0030);
+	wire        simpleuart_reg_dat_sel = mem_valid && (mem_addr == 32'h5000 || mem_addr ==32'h8000);
 	wire [31:0] simpleuart_reg_dat_do;
 	wire        simpleuart_reg_dat_wait;
 
 	assign mem_ready = 
-            (iomem_valid && iomem_ready) || progmem_ready || ram_ready ||
-			simpleuart_reg_div_sel || (simpleuart_reg_dat_sel && !simpleuart_reg_dat_wait);
+            (iomem_valid && iomem_ready) || progmem_ready || ram_ready || (simpleuart_reg_dat_sel && !simpleuart_reg_dat_wait);
 
 	assign mem_rdata = 
             (iomem_valid && iomem_ready) ? iomem_rdata :
             progmem_ready ? progmem_rdata :
             ram_ready ? ram_rdata :
-			simpleuart_reg_div_sel ? simpleuart_reg_div_do :
 			simpleuart_reg_dat_sel ? simpleuart_reg_dat_do : 32'h0000_0000;
 
-`ifdef SIMULATION    
-	wire        trace_valid;
-	wire [35:0] trace_data;
-    integer     trace_file;
-`endif
 //Processor
 picorv32 #(
 		.STACKADDR(STACKADDR),
@@ -79,13 +69,7 @@ picorv32 #(
 		.BARREL_SHIFTER(1),
 		.COMPRESSED_ISA(0),
 		.ENABLE_MUL(0),
-		.ENABLE_DIV(0),
-`ifdef SIMULATION    
-		.ENABLE_IRQ_QREGS(0),
-        .ENABLE_TRACE(1)
-`else
-		.ENABLE_IRQ_QREGS(0)
-`endif
+		.ENABLE_DIV(0)
 	) cpu (
 		.clk         (clk        ),
 		.resetn      (resetn     ),
@@ -95,23 +79,16 @@ picorv32 #(
 		.mem_addr    (mem_addr   ),//output 32 bit
 		.mem_wdata   (mem_wdata  ),//output 32 bit
 		.mem_wstrb   (mem_wstrb  ),//output 4 bit
-`ifdef SIMULATION
-        .mem_rdata   (mem_rdata  ),
-    	.trace_valid (trace_valid),
-		.trace_data  (trace_data )
-        
-`else 
-    .mem_rdata   (mem_rdata  )
-`endif
+        .mem_rdata   (mem_rdata  )
 	);
 //----------------------------------------End processor instance------------------------------
 //RAM instance
 	always @(posedge clk)
-		ram_ready <= mem_valid && !mem_ready && mem_addr > 4*MEM_WORDS;
+		ram_ready <= mem_valid && !mem_ready && mem_addr > 32'h3FFFC;
 
 	picosoc_mem #(.WORDS(MEM_WORDS)) memory (//instance RAM memory
 		.clk(clk),
-        .wen((mem_valid && !mem_ready && mem_addr < 4*MEM_WORDS) ? mem_wstrb : 4'b0),
+        .wen((mem_valid && !mem_ready && mem_addr>32'h3FFFC && mem_addr < 32'h80000) ? mem_wstrb : 4'b0),
 		.addr(mem_addr[23:2]),
 		.wdata(mem_wdata),
 		.rdata(ram_rdata)
@@ -122,23 +99,18 @@ picorv32 #(
         .clk    (clk),
         .rstn   (resetn),
 
-        .valid  (mem_valid && mem_addr >= 4*MEM_WORDS && mem_addr < 32'h 0200_0000),
+        .valid  (mem_valid && mem_addr < 32'h800),
         .ready  (progmem_ready),
         .addr   (mem_addr),
         .rdata  (progmem_rdata)
     );
 //-------------------------------------END ROM instance-----------------------------------------
-//UART
-	simpleuart simpleuart (
+//UART A PC-FPGA
+	UART_custom UA (
 		.clk         (clk         ),
-		.resetn      (resetn      ),
 
 		.ser_tx      (UART_TXD_IN      ),
 		.ser_rx      (UART_RXD_OUT      ),
-
-		.reg_div_we  (simpleuart_reg_div_sel ? mem_wstrb : 4'b 0000),
-		.reg_div_di  (mem_wdata),
-		.reg_div_do  (simpleuart_reg_div_do),
 
 		.reg_dat_we  (simpleuart_reg_dat_sel ? mem_wstrb[0] : 1'b 0),
 		.reg_dat_re  (simpleuart_reg_dat_sel && !mem_wstrb),
@@ -146,29 +118,6 @@ picorv32 #(
 		.reg_dat_do  (simpleuart_reg_dat_do),
 		.reg_dat_wait(simpleuart_reg_dat_wait)
 	);
-//simulation 
-`ifdef SIMULATION
-    always @(posedge clk)
-        if (resetn) begin
-            if ( mem_instr && mem_valid && mem_ready)
-                $display("Inst rd: [0x%08X] = 0x%08X", mem_addr, mem_rdata);
-            if (!mem_instr && mem_valid && mem_ready)
-                $display("Data rd: [0x%08X] = 0x%08X", mem_addr, mem_rdata);
-        end
-    // Trace
-    initial begin
-        trace_file = $fopen("testbench.trace", "w");
-        repeat (10) @(posedge clk);
-
-        while(1) begin
-            @(posedge clk)
-            if (resetn && trace_valid)
-                $fwrite(trace_file, "%x\n", trace_data);
-                $fflush(trace_file);
-                //$display("Trace  : %09X", trace_data);
-        end
-    end
-`endif // SIMULATION
 endmodule
 
 module picosoc_regs (//RISCV core registers

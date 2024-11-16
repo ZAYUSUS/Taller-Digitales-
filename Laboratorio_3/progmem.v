@@ -15,7 +15,7 @@ module progmem (
 
   localparam MEM_SIZE_BITS = 10;  // In 32-bit words
   localparam MEM_SIZE = 1 << MEM_SIZE_BITS;
-  localparam MEM_ADDR_MASK = 32'h0010_0000;
+  //localparam MEM_ADDR_MASK = 32'h0010_0000;
 
   // ============================================================================
 
@@ -36,7 +36,8 @@ module progmem (
 
   always @(posedge clk or negedge rstn)
     if (!rstn) o_ready <= 1'd0;
-    else o_ready <= valid && ((addr & MEM_ADDR_MASK) != 0);
+    else o_ready <= valid && addr < 32'h800;
+    //&& ((addr & MEM_ADDR_MASK) != 0);
 
   // Output connectins
   assign ready    = o_ready;

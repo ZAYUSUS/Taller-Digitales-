@@ -60,19 +60,19 @@ module top (
 			gpio <= 0;
 		end else begin
 			iomem_ready <= 0;
-			if (iomem_valid && !iomem_ready && iomem_addr[31:24] == 8'h 03) begin
+			if (iomem_valid && !iomem_ready && iomem_addr == 32'h3000) begin
 				iomem_ready <= 1;
-				iomem_rdata <= {SW, gpio[15:0]};
+				iomem_rdata <= {gpio[15:0],SW};
 				if (iomem_wstrb[0]) gpio[ 7: 0] <= iomem_wdata[ 7: 0];
 				if (iomem_wstrb[1]) gpio[15: 8] <= iomem_wdata[15: 8];
 				if (iomem_wstrb[2]) gpio[23:16] <= iomem_wdata[23:16];
 				if (iomem_wstrb[3]) gpio[31:24] <= iomem_wdata[31:24];
-			end else if (iomem_valid && !iomem_ready && iomem_addr == 32'h 0200_0000) begin // reads the switches
+			end else if (iomem_valid && !iomem_ready && iomem_addr == 32'h2000) begin // reads the switches
 			     iomem_ready <=1;
-			     iomem_rdata <= {SW,gpio[15:0]};
-			end else if (iomem_valid && !iomem_ready && iomem_addr == 32'h 0200_0008) begin // reads the buttons
+			     iomem_rdata <= {gpio[15:0],SW};
+			end else if (iomem_valid && !iomem_ready && iomem_addr == 32'h4000) begin // reads the buttons
 			     iomem_ready <=1;
-			     iomem_rdata <= {BTNC,BTNU,BTNL,BTNR,BTND,gpio[26:0]};
+			     iomem_rdata <= {gpio[26:0],BTNC,BTNU,BTNL,BTNR,BTND};
 			end
 		end
 	end
