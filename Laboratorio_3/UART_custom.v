@@ -25,6 +25,8 @@ module UART_custom(
 	output ser_tx,
 	input  ser_rx,
 	
+	output [31:0] uart_c_A,
+	
     input         reg_dat_we,
 	input         reg_dat_re,
 	input  [31:0] reg_dat_di,
@@ -40,7 +42,8 @@ reg [12:0] rxCounter = 0;
 reg [7:0] dataIn = 0;
 reg [2:0] rxBitNumber = 0;
 reg byteReady = 0;
-reg sending;
+reg sending = 0;
+reg receive =0;
 
 localparam RX_STATE_IDLE = 0;
 localparam RX_STATE_START_BIT = 1;
@@ -50,7 +53,7 @@ localparam RX_STATE_STOP_BIT = 5;
 
 assign reg_dat_wait = reg_dat_we && sending;
 assign reg_dat_do = byteReady ? dataIn : ~0;// data received goes to do
-
+assign uart_c_A = receive ? 2 : 0;
 always @(posedge clk) begin
 if (reg_dat_re)
 	byteReady <= 0;
@@ -91,6 +94,7 @@ if (reg_dat_re)
                 rxState <= RX_STATE_IDLE;
                 rxCounter <= 0;
                 byteReady <= 1;
+                if (dataIn==2) receive <= 1;
             end
         end
     endcase

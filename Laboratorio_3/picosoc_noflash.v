@@ -49,18 +49,23 @@ module picosoc_noflash (
 	assign iomem_addr = mem_addr;
 	assign iomem_wdata = mem_wdata;
 
-	wire        simpleuart_reg_dat_sel = mem_valid && (mem_addr == 32'h5000 || mem_addr ==32'h8000);
+	wire        simpleuart_reg_dat_sel = mem_valid &&  (mem_addr == 32'h8000 || mem_addr == 32'h6000);
+	wire        uart_control_dat_sel = mem_valid && mem_addr == 32'h5000;
 	wire [31:0] simpleuart_reg_dat_do;
 	wire        simpleuart_reg_dat_wait;
+	wire [31:0] uart_c_A;
 
 	assign mem_ready = 
-            (iomem_valid && iomem_ready) || progmem_ready || ram_ready || (simpleuart_reg_dat_sel && !simpleuart_reg_dat_wait);
+            (iomem_valid && iomem_ready) || progmem_ready || ram_ready || (simpleuart_reg_dat_sel && !simpleuart_reg_dat_wait) 
+            || (uart_control_dat_sel && !simpleuart_reg_dat_wait);
 
 	assign mem_rdata = 
             (iomem_valid && iomem_ready) ? iomem_rdata :
             progmem_ready ? progmem_rdata :
             ram_ready ? ram_rdata :
-			simpleuart_reg_dat_sel ? simpleuart_reg_dat_do : 32'h0000_0000;
+            simpleuart_reg_dat_sel ? simpleuart_reg_dat_do : 
+            uart_control_dat_sel ? uart_c_A  : 32'h0000_0000;
+			// simpleuart_reg_dat_sel ? simpleuart_reg_dat_do : 32'h0000_0000;
 
 //Processor
 picorv32 #(
@@ -85,11 +90,13 @@ picorv32 #(
 //RAM instance
 	always @(posedge clk)
 		ram_ready <= mem_valid && !mem_ready && mem_addr > 32'h3FFFC;
-
-	picosoc_mem #(.WORDS(MEM_WORDS)) memory (//instance RAM memory
+    reg [32:0] ram_mod_addr;
+    always @(mem_addr)
+        ram_mod_addr = mem_addr - 32'h40000;
+	picosoc_mem #(.WORDS(512)) memory (//instance RAM memory
 		.clk(clk),
-        .wen((mem_valid && !mem_ready && mem_addr>32'h3FFFC && mem_addr < 32'h80000) ? mem_wstrb : 4'b0),
-		.addr(mem_addr[23:2]),
+        .wen((mem_valid && !mem_ready && mem_addr>32'h3FFFC) ? mem_wstrb : 4'b0),
+		.addr(ram_mod_addr[23:2]),
 		.wdata(mem_wdata),
 		.rdata(ram_rdata)
 	);
@@ -111,7 +118,7 @@ picorv32 #(
 
 		.ser_tx      (UART_TXD_IN      ),
 		.ser_rx      (UART_RXD_OUT      ),
-
+        .uart_c_A    (uart_c_A),
 		.reg_dat_we  (simpleuart_reg_dat_sel ? mem_wstrb[0] : 1'b 0),
 		.reg_dat_re  (simpleuart_reg_dat_sel && !mem_wstrb),
 		.reg_dat_di  (mem_wdata),
@@ -147,8 +154,9 @@ module picosoc_mem #(// RAM memory
 	input [31:0] wdata,
 	output reg [31:0] rdata
 );
+    reg [21:0] addr_mask;
 	(* ram_style = "distributed" *) reg [31:0] mem [0:WORDS-1];// RAM
-
+    
 	always @(posedge clk) begin
 		rdata <= mem[addr];
 		if (wen[0]) mem[addr][ 7: 0] <= wdata[ 7: 0];

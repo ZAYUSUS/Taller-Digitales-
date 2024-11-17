@@ -13,6 +13,7 @@
 # RAM from 0x40000 to 0x80000
 start:
     li   s10, 0x40000 # Initial image address
+    li   s11,0   
     j    SCAN
 
 SCAN:
@@ -41,12 +42,15 @@ Control =1 send
 Control =2 receive
 */
 RECEIVE_IMAGE_PREP:
-    lui s2, 0x3F        # Load upper 20 bits of the constant into s2 (0x3F000)
-    addi s2, s2, 0x48   # Add the lower 12 bits of the constant (0x48)
-    add s2,s2,s10    # end memory for this image
     add s10,s10,s11   # initial address memory
+
+    li s1,0   # i = 0
+    lui s3,0xFD
+    addi s3,s3,0x20
+
     j RECEIVE_IMAGE
 RECEIVE_IMAGE:
+    
         /*
         Img1 0x40000 - 0x43F48
         Img2 0x43F48 - 0x47E90
@@ -58,14 +62,18 @@ RECEIVE_IMAGE:
         Img8 0x5BAF8 - 0x5FA40
         each image is about 518400 bits or 64800 bytes
     */
-    li   t1,0x6000 # Address of the byte receive
-    lb   t2,0(t1) # load the byte
-    sb   t2,0(s10) # save the byte 
+    li   t2,0x6000 # Address of the byte receive
+    lw   t3,0(t2) # load the byte
+    sw   t3,0(s10) # save the byte
 
-    addi s10,s10,8 # adds the offset for the next byte
+    slli t0,s1,2   # i* 4 offset
+    add s10,s10,t0 # adds the offset for the next byte
 
-    bne  s10,s2,RECEIVE_IMAGE # if actual bytes < total bytes -> repit
-    lui  t0,0x3F 
-    addi t0,zero,0x48
-    add  s11,s11,t0 # add 1 more image to the index
+    addi s1,s1,1  # i++
+    blt  s1,s3,RECEIVE_IMAGE # if actual bytes < total bytes -> repit
+
+    lui  t1,0x3F 
+    addi t1,zero,0x48
+    add  s11,s11,t1 # add 1 more image to the index
+    
     j    SCAN
