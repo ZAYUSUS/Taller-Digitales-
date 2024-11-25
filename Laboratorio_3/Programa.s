@@ -33,16 +33,14 @@ SCAN:
 
     lw   a3,0(a6)  # content of UB control
     li   s1,0x2  
-    beq a3,s1,SEND_IMAGE_PREP # If controlB is 1 we send data to the FPGA
+    beq  a3,s1,SEND_IMAGE_PREP # If controlB is 1 we send data to the FPGA
 
     j SCAN
 RECEIVE_IMAGE_PREP:
-    add s10,s10,s11   # initial address memory
     li s1,0   # i = 0
 
     j RECEIVE_IMAGE
 RECEIVE_IMAGE:
-    
         /*
         Img1 0x40000 - 0x43F48
         Img2 0x43F48 - 0x47E90
@@ -56,48 +54,38 @@ RECEIVE_IMAGE:
     */
     li   t2,0x6000 # Address of the byte receive
     lb   t3,0(t2) # load the byte
-    sb   t3,0(s10) # save the byte
+    add  s9,s10,s11
+    sb   t3,0(s9) # save the byte
 
-    addi s10,s10,1 # adds the offset for the next byte
-    
+    addi s11,s11,1 # adds the offset for the next byte
     addi s1,s1,1 # i++
     blt  s1,s3,RECEIVE_IMAGE # if actual bytes < total bytes -> repit
 
-    # lui  t1,0x3F 
-    # addi t1,zero,0x48
-    li   t1,4 # 4 bytes just to test
-    li   t2,-4 # -4
-    add  s10,s10,t2 # s10 minus the offset
-    add  s11,s11,t1 # add 1 more image to the index
-
-    addi s5,s5,1 # Imges + 1
+    addi s5,s5,1 # Images + 1
     sw   s5,0(s4) # Saves the images count on leds
 
     j    SCAN
 
 SEND_IMAGE_PREP:
     # S10 contains the initial addres
-    add  s9,s10,zero # Initial Address
-    li   s1,0   # i = 0
-    # lui  t1,0x3F 
-    # addi t1,zero,0x48
-    # neg  t2,t2
-    # add  t3,s11,t2
+    # beq   s11,zero,SCAN
+    li    s1,0   # i = 0
+    addi  s11,s11,-1
+
     j SEND_IMAGE
 SEND_IMAGE:
-    li   t2,0x9000 # Address of the byte receive
+    li   t2,0x9000 # Address of the image byte 
 
+    add  s9,s10,s11
     lb   t3,0(s9) # loads the memory data
     sb   t3,0(t2) # saves the memory data to Uart B data register
 
-    # sb  zero,0(s9) # clean data
+    sb  zero,0(s9) # clean data
 
-    addi s9,s9,1 # address+1 (next byte)
+    addi s11,s11,-1 # address-1 (next byte)
     addi s1,s1,1 # i++
     blt  s1,s3,SEND_IMAGE # if actual bytes < total bytes -> repit
 
-    neg  s3,s3 # s3 =-s3
-    add  s11,s11,s3      # decrease the memory offset
     addi s5,s5,-1 # Images - 1
     sw   s5,0(s4) # Saves the images count on leds
     j SCAN
