@@ -104,7 +104,7 @@ localparam TX_STATE_DEBOUNCE = 4;
 always @(posedge clk)begin
     case (txState)
         TX_STATE_IDLE: begin
-            if (reg_dat_we) begin //cuando se presiona una tecla
+            if (reg_dat_we) begin 
                 txState <= TX_STATE_START_BIT;
                 sending<=1;
                 txCounter <= 0;
@@ -115,10 +115,9 @@ always @(posedge clk)begin
         end 
         TX_STATE_START_BIT: begin
             txPinRegister <= 0;
-            
             if ((txCounter + 1) == DELAY_FRAMES) begin //espera 312us 
                 txState <= TX_STATE_WRITE;
-                dataOut <=  {1'b1, reg_dat_di[7:0], 1'b0};
+                dataOut <=  reg_dat_di[7:0];
                 txBitNumber <= 0;
                 txCounter <= 0;
             end else 
@@ -127,7 +126,7 @@ always @(posedge clk)begin
         TX_STATE_WRITE: begin
             txPinRegister <= dataOut[txBitNumber];// envia el bit
             if ((txCounter + 1) == DELAY_FRAMES) begin
-                if (txBitNumber == 4'b1010) begin // cuenta hasta 8bits
+                if (txBitNumber == 3'b111) begin // cuenta hasta 10bits
                     txState <= TX_STATE_STOP_BIT;
                 end else begin
                     txState <= TX_STATE_WRITE;
@@ -150,11 +149,12 @@ always @(posedge clk)begin
             end else 
                 txCounter <= txCounter + 1;
         end
-            TX_STATE_DEBOUNCE: begin
+        TX_STATE_DEBOUNCE: begin
             if ((txCounter + 1) == DELAY_FRAMES) begin //espera 262143 ciclos es 9,71 ms
-                if (!reg_dat_we) 
-                    sending<=0;
-                    txState <= TX_STATE_IDLE;
+                sending<=0;
+                //if (!reg_dat_we)begin 
+                txState <= TX_STATE_IDLE;
+                   //end
             end else
                 txCounter <= txCounter + 1;
         end

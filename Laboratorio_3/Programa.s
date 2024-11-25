@@ -52,20 +52,22 @@ RECEIVE_IMAGE:
         Img6 0x53C68 - 0x57BB0
         Img7 0x57BB0 - 0x5BAF8
         Img8 0x5BAF8 - 0x5FA40
-        each image is about 518400 bits or 64800 bytes
+        each image is about 518400 bits or 64800 bytes or 16200 words
     */
     li   t2,0x6000 # Address of the byte receive
     lb   t3,0(t2) # load the byte
     sb   t3,0(s10) # save the byte
 
-    # slli t0,s1,2   # i* 4 offset
     addi s10,s10,1 # adds the offset for the next byte
     
     addi s1,s1,1 # i++
     blt  s1,s3,RECEIVE_IMAGE # if actual bytes < total bytes -> repit
 
-    lui  t1,0x3F 
-    addi t1,zero,0x48
+    # lui  t1,0x3F 
+    # addi t1,zero,0x48
+    li   t1,4 # 4 bytes just to test
+    li   t2,-4 # -4
+    add  s10,s10,t2 # s10 minus the offset
     add  s11,s11,t1 # add 1 more image to the index
 
     addi s5,s5,1 # Imges + 1
@@ -75,13 +77,12 @@ RECEIVE_IMAGE:
 
 SEND_IMAGE_PREP:
     # S10 contains the initial addres
+    add  s9,s10,zero # Initial Address
     li   s1,0   # i = 0
     # lui  t1,0x3F 
     # addi t1,zero,0x48
     # neg  t2,t2
     # add  t3,s11,t2
-    add  s9,s11,s10 # Initial Address
-    
     j SEND_IMAGE
 SEND_IMAGE:
     li   t2,0x9000 # Address of the byte receive
@@ -89,7 +90,7 @@ SEND_IMAGE:
     lb   t3,0(s9) # loads the memory data
     sb   t3,0(t2) # saves the memory data to Uart B data register
 
-    sw  zero,0(s9) # clean data
+    # sb  zero,0(s9) # clean data
 
     addi s9,s9,1 # address+1 (next byte)
     addi s1,s1,1 # i++
