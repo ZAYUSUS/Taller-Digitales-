@@ -1,31 +1,12 @@
 
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/16/2024 12:36:15 PM
-// Design Name: 
-// Module Name: UART_custom
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module UART_custom(
 	input clk,
 	output ser_tx,
 	input  ser_rx,
 	
-	output [31:0] uart_c_A,
+	output [31:0] uart_c,
+	output        uart_r_ready,
 	
     input         reg_dat_we,
 	input         reg_dat_re,
@@ -43,7 +24,6 @@ reg [7:0] dataIn = 0;
 reg [2:0] rxBitNumber = 0;
 reg byteReady = 0;
 reg sending = 0;
-reg receive =0;
 
 localparam RX_STATE_IDLE = 0;
 localparam RX_STATE_START_BIT = 1;
@@ -52,13 +32,14 @@ localparam RX_STATE_READ = 3;
 localparam RX_STATE_STOP_BIT = 5;
 
 assign reg_dat_wait = reg_dat_we && sending;
-assign reg_dat_do = byteReady ? dataIn : ~0;// data received goes to do
-assign uart_c_A = receive ? 2 : 0;
+assign reg_dat_do = (byteReady && reg_dat_re) ? dataIn : 32'h0000_0000;// data received goes to do
+assign uart_r_ready = byteReady ? 1 : 0;
+
 always @(posedge clk) begin
-if (reg_dat_re)
-	byteReady <= 0;
     case (rxState)
         RX_STATE_IDLE: begin
+            byteReady<=1;
+            dataIn<=0;
             if (ser_rx == 0) begin
                 rxState <= RX_STATE_START_BIT;
                 rxCounter <= 1;
@@ -94,7 +75,6 @@ if (reg_dat_re)
                 rxState <= RX_STATE_IDLE;
                 rxCounter <= 0;
                 byteReady <= 1;
-                if (dataIn==2) receive <= 1;
             end
         end
     endcase
@@ -115,9 +95,7 @@ reg [3:0] txByteCounter = 0;
 
 assign ser_tx =  txPinRegister;
 
-localparam MEMORY_LENGTH = 64800;
-
-
+localparam MEMORY_LENGTH = 1;
 localparam TX_STATE_IDLE = 0;
 localparam TX_STATE_START_BIT = 1;
 localparam TX_STATE_WRITE = 2;
@@ -125,7 +103,6 @@ localparam TX_STATE_STOP_BIT = 3;
 localparam TX_STATE_DEBOUNCE = 4;
 always @(posedge clk)begin
     case (txState)
-        
         TX_STATE_IDLE: begin
             if (reg_dat_we) begin //cuando se presiona una tecla
                 txState <= TX_STATE_START_BIT;
@@ -141,7 +118,7 @@ always @(posedge clk)begin
             
             if ((txCounter + 1) == DELAY_FRAMES) begin //espera 312us 
                 txState <= TX_STATE_WRITE;
-                dataOut <=  reg_dat_di[txByteCounter];
+                dataOut <=  {1'b1, reg_dat_di[7:0], 1'b0};
                 txBitNumber <= 0;
                 txCounter <= 0;
             end else 
@@ -150,7 +127,7 @@ always @(posedge clk)begin
         TX_STATE_WRITE: begin
             txPinRegister <= dataOut[txBitNumber];// envia el bit
             if ((txCounter + 1) == DELAY_FRAMES) begin
-                if (txBitNumber == 3'b111) begin // cuenta hasta 8bits
+                if (txBitNumber == 4'b1010) begin // cuenta hasta 8bits
                     txState <= TX_STATE_STOP_BIT;
                 end else begin
                     txState <= TX_STATE_WRITE;
@@ -174,7 +151,7 @@ always @(posedge clk)begin
                 txCounter <= txCounter + 1;
         end
             TX_STATE_DEBOUNCE: begin
-            if (txCounter == 23'b111111111111111111) begin //espera 262143 ciclos es 9,71 ms
+            if ((txCounter + 1) == DELAY_FRAMES) begin //espera 262143 ciclos es 9,71 ms
                 if (!reg_dat_we) 
                     sending<=0;
                     txState <= TX_STATE_IDLE;

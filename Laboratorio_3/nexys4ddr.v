@@ -24,8 +24,8 @@ module top (
 	input BTNL,
 	input BTNR,
 	input BTND,
-	input [3:0] XA_N,// JMOD
-	input [3:0] XP_N,//JMOD
+	input XA_N,// JMOD
+	output XP_N,//JMOD
 
 	output UART_TXD_IN,
 	input UART_RXD_OUT,
@@ -87,6 +87,9 @@ module top (
 		.iomem_addr   (iomem_addr  ),
 		.iomem_wdata  (iomem_wdata ),
 		.iomem_rdata  (iomem_rdata ),
+		
+		.UARTB_TXD_IN(XP_N),
+		.UARTB_RXD_OUT(XA_N),
 		
 	    .UART_TXD_IN       (UART_TXD_IN),
 		.UART_RXD_OUT      (UART_RXD_OUT)
