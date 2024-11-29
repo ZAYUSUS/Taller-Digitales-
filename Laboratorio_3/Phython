@@ -1,0 +1,54 @@
+from PIL import Image
+import os
+
+def rgb888_to_rgb565(r, g, b):
+    """Convierte un píxel RGB888 a RGB565."""
+    r_5 = (r >> 3) & 0x1F  # 5 bits para R
+    g_6 = (g >> 2) & 0x3F  # 6 bits para G
+    b_5 = (b >> 3) & 0x1F  # 5 bits para B
+    return (r_5 << 11) | (g_6 << 5) | b_5
+
+def image_to_rgb565(image_path):
+    """Convierte una imagen a una lista de valores RGB565."""
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"El archivo no existe: {image_path}")
+    
+    try:
+        img = Image.open(image_path)
+        img = img.convert("RGB")  # Asegura que la imagen esté en RGB
+        width, height = img.size
+        pixels_rgb565 = []
+
+        for y in range(height):
+            row = []
+            for x in range(width):
+                r, g, b = img.getpixel((x, y))
+                rgb565 = rgb888_to_rgb565(r, g, b)
+                row.append(rgb565)
+            pixels_rgb565.append(row)
+        
+        return pixels_rgb565
+    except Exception as e:
+        print(f"Error al procesar la imagen: {e}")
+        return None
+
+# Cambia esta ruta por la ruta correcta a tu imagen
+image_path = "C:/Users/Estudiante/Documents/WhatsApp Image 2024-11-28 at 6.12.23 PM.jpeg"
+
+try:
+    # Convierte la imagen a formato RGB565
+    pixels_rgb565 = image_to_rgb565(image_path)
+    
+    if pixels_rgb565:
+        # Imprime toda la matriz
+        print("Matriz completa de valores RGB565:")
+        for row in pixels_rgb565:
+            print(row)
+        
+        # Opción para guardar en un archivo
+        with open("output_rgb565.txt", "w") as file:
+            for row in pixels_rgb565:
+                file.write(" ".join(map(str, row)) + "\n")
+        print("La matriz completa se ha guardado en 'output_rgb565.txt'")
+except FileNotFoundError as e:
+    print(e)
