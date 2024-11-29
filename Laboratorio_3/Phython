@@ -8,15 +8,15 @@ def rgb888_to_rgb565(r, g, b):
     b_5 = (b >> 3) & 0x1F  # 5 bits para B
     return (r_5 << 11) | (g_6 << 5) | b_5
 
-def image_to_rgb565(image_path):
-    """Convierte una imagen a una lista de valores RGB565."""
+def image_to_rgb565(image_path, width=135, height=240):
+    """Convierte una imagen a una lista de valores RGB565 y la redimensiona a 135x240 píxeles."""
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"El archivo no existe: {image_path}")
     
     try:
         img = Image.open(image_path)
         img = img.convert("RGB")  # Asegura que la imagen esté en RGB
-        width, height = img.size
+        img = img.resize((width, height))  # Redimensiona a 135x240
         pixels_rgb565 = []
 
         for y in range(height):
@@ -36,19 +36,19 @@ def image_to_rgb565(image_path):
 image_path = "C:/Users/Estudiante/Documents/WhatsApp Image 2024-11-28 at 6.12.23 PM.jpeg"
 
 try:
-    # Convierte la imagen a formato RGB565
-    pixels_rgb565 = image_to_rgb565(image_path)
+    # Convierte la imagen a formato RGB565 con tamaño 135x240
+    pixels_rgb565 = image_to_rgb565(image_path, width=135, height=240)
     
     if pixels_rgb565:
         # Imprime toda la matriz
-        print("Matriz completa de valores RGB565:")
+        print("Matriz completa de valores RGB565 (135x240):")
         for row in pixels_rgb565:
             print(row)
         
         # Opción para guardar en un archivo
-        with open("output_rgb565.txt", "w") as file:
+        with open("output_rgb565_135x240.txt", "w") as file:
             for row in pixels_rgb565:
                 file.write(" ".join(map(str, row)) + "\n")
-        print("La matriz completa se ha guardado en 'output_rgb565.txt'")
+        print("La matriz completa se ha guardado en 'output_rgb565_135x240.txt'")
 except FileNotFoundError as e:
     print(e)
