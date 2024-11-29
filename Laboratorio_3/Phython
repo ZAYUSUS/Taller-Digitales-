@@ -8,8 +8,8 @@ def rgb888_to_rgb565(r, g, b):
     b_5 = (b >> 3) & 0x1F  # 5 bits para B
     return (r_5 << 11) | (g_6 << 5) | b_5
 
-def image_to_rgb565(image_path, width=135, height=240):
-    """Convierte una imagen a una lista de valores RGB565 y la redimensiona a 135x240 píxeles."""
+def image_to_rgb565_flat(image_path, width=135, height=240):
+    """Convierte una imagen a una lista de valores RGB565 en formato binario continuo."""
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"El archivo no existe: {image_path}")
     
@@ -20,35 +20,31 @@ def image_to_rgb565(image_path, width=135, height=240):
         pixels_rgb565 = []
 
         for y in range(height):
-            row = []
             for x in range(width):
                 r, g, b = img.getpixel((x, y))
                 rgb565 = rgb888_to_rgb565(r, g, b)
-                row.append(rgb565)
-            pixels_rgb565.append(row)
+                pixels_rgb565.append(f"{rgb565:016b}")  # Convertir a binario de 16 bits
         
-        return pixels_rgb565
+        return "".join(pixels_rgb565)  # Combinar todo en un solo texto
     except Exception as e:
         print(f"Error al procesar la imagen: {e}")
         return None
 
 # Cambia esta ruta por la ruta correcta a tu imagen
-image_path = "C:/Users/Estudiante/Documents/WhatsApp Image 2024-11-28 at 6.12.23 PM.jpeg"
+image_path = "C:/Users/Estudiante/Documents/1_azul.png"
 
 try:
-    # Convierte la imagen a formato RGB565 con tamaño 135x240
-    pixels_rgb565 = image_to_rgb565(image_path, width=135, height=240)
-    
-    if pixels_rgb565:
-        # Imprime toda la matriz
-        print("Matriz completa de valores RGB565 (135x240):")
-        for row in pixels_rgb565:
-            print(row)
+    # Convierte la imagen a formato RGB565 con tamaño 135x240 y en texto continuo
+    pixels_rgb565_flat = image_to_rgb565_flat(image_path, width=135, height=240)
+    print (len(pixels_rgb565_flat))
+    if pixels_rgb565_flat:
+        # Imprime toda la matriz como texto continuo en binario
+        print("Valores RGB565 en binario (como texto continuo):")
+        print(pixels_rgb565_flat)
         
         # Opción para guardar en un archivo
-        with open("output_rgb565_135x240.txt", "w") as file:
-            for row in pixels_rgb565:
-                file.write(" ".join(map(str, row)) + "\n")
-        print("La matriz completa se ha guardado en 'output_rgb565_135x240.txt'")
+        with open("output_rgb565_135x240_continuo.txt", "w") as file:
+            file.write(pixels_rgb565_flat)
+        print("El texto binario continuo se ha guardado en 'output_rgb565_135x240_continuo.txt'")
 except FileNotFoundError as e:
     print(e)
